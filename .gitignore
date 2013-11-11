@@ -15,8 +15,6 @@ screenshots/
 rebel.xml
 
 ## No Eclipse settings (except Xtend)
-.project
-.classpath
 .settings/
 .metadata
 !.settings/org.eclipse.xtend.core.Xtend.prefs
