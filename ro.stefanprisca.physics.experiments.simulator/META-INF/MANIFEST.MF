@@ -7,4 +7,5 @@ Bundle-Activator: ro.stefanprisca.physics.experiments.simulator.Activator
 Require-Bundle: org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: ro.stefanprisca.physics.experiments.simulator
+Export-Package: ro.stefanprisca.physics.experiments.simulator,
+ ro.stefanprisca.physics.experiments.simulator.core
