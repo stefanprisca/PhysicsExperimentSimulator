@@ -1,6 +1,8 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp;
 
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -10,10 +12,34 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
+import ro.stefanprisca.physics.experiments.simulator.ExperimentIndexer;
+import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
+
 public class ExperimentsView extends ViewPart {
+	
+	private class ContentsProvider implements IContentProvider<java.util.List<Experiment>>
+	{
+		private ExperimentIndexer indexer;
+		@Override
+		public void dispose() {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void inputChanged(Viewer<java.util.List<Experiment>> viewer,
+				java.util.List<Experiment> oldInput,
+				java.util.List<Experiment> newInput) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
+		
+	}
 	public static final String ID = "ro.stefanprisca.physics.experiments.simulator.view";
 
 	private ListViewer experiments;
+	private ContentsProvider provider;
 	
 	public void createPartControl(Composite parent) {
 		
@@ -25,6 +51,7 @@ public class ExperimentsView extends ViewPart {
 		searchExpr.setMessage("Search for experiments!");
 		
 		experiments = new ListViewer(contents);
+		experiments.setContentProvider(provider);
 		List experList=experiments.getList();
 		experList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
 		experiments.add("First experiment");
