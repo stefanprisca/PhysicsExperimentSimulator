@@ -22,8 +22,8 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="View"
-            class="ro.stefanprisca.physics.experiments.simulator.rcp.ExperimentsView"
+            name="ExperimentsView"
+            class="org.eclipse.recommenders.injection.ExtensionFactory:ro.stefanprisca.physics.experiments.simulator.rcp.ExperimentsView"
             id="ro.stefanprisca.physics.experiments.simulator.view">
       </view>
    </extension>
@@ -50,6 +50,11 @@
                   commandId="org.eclipse.ui.file.exit"
                   label="Exit">
             </command>
+            <command
+                  commandId="org.eclipse.ui.window.preferences"
+                  label="Preferences"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -64,6 +69,20 @@
                value="simulator.product">
          </property>
       </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="ro.stefanprisca.physics.experiments.simulator.rcp.preferences.SimulatorPreferencePage"
+            id="ro.stefanprisca.physics.experiments.simulator.rcp.preferences.SImulatorPreferencePage"
+            name="Simulator Preferences">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="ro.stefanprisca.physics.experiments.simulator.rcp.preferences.PreferenceInitializer">
+      </initializer>
    </extension>
 
 </plugin>
