@@ -18,12 +18,17 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IPerspectiveRegistry;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import static ro.stefanprisca.physics.experiments.simulator.computer.ExperimentComputer.compute;
-import ro.stefanprisca.physics.experiments.simulator.ExperimentStorage;
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
+import ro.stefanprisca.physics.experiments.simulator.core.ExperimentStorage;
 import ro.stefanprisca.physics.experiments.simulator.core.Function;
+import ro.stefanprisca.physics.experiments.simulator.rcp.perspectives.RuntimePerspective;
 
 import com.google.inject.Inject;
 
@@ -129,6 +134,11 @@ public class ExperimentsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e){
 				compute(expr);
+				IWorkbenchWindow window = getViewSite().getWorkbenchWindow();
+				IWorkbenchPage page = window.getActivePage();
+				IPerspectiveRegistry registry = PlatformUI.getWorkbench().getPerspectiveRegistry();
+				page.setPerspective(registry.findPerspectiveWithId(RuntimePerspective.getID()));
+			
 			}
 		});
 		

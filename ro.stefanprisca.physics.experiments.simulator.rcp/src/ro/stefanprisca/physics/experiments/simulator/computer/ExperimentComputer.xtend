@@ -21,7 +21,7 @@ class ExperimentComputer {
 		if (!fComp.compIsOk)
 		{
 			LOGGER.severe("\n********************\n"+
-				"The experiment encountered some issues. Please check the log for <SEVERE> messages!\n"+
+				"The experiment encountered some issues. Please check the log for messages marked with <SEVERE>!\n"+
 			"********************")	
 		}
 		

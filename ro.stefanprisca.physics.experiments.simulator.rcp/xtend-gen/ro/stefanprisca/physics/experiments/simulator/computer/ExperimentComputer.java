@@ -48,7 +48,7 @@ public class ExperimentComputer {
     boolean _not = (!_compIsOk);
     if (_not) {
       String _plus_3 = ("\n********************\n" + 
-        "The experiment encountered some issues. Please check the log for <SEVERE> messages!\n");
+        "The experiment encountered some issues. Please check the log for messages marked with <SEVERE>!\n");
       String _plus_4 = (_plus_3 + 
         "********************");
       ExperimentComputer.LOGGER.severe(_plus_4);

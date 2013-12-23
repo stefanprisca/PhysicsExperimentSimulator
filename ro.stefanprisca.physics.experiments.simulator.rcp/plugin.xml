@@ -14,9 +14,15 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="Perspective"
-            class="ro.stefanprisca.physics.experiments.simulator.rcp.Perspective"
+            name="ExperimentPerspective"
+            class="ro.stefanprisca.physics.experiments.simulator.rcp.perspectives.ExperimentsPerspective"
             id="ro.stefanprisca.physics.experiments.simulator.perspective">
+      </perspective>
+      <perspective
+            class="ro.stefanprisca.physics.experiments.simulator.rcp.perspectives.RuntimePerspective"
+            icon="icons/releng_gears.gif"
+            id="ro.stefanprisca.physics.experiments.simulator.rcp.enviroment.RuntimePerspective"
+            name="Runtime Perspective">
       </perspective>
    </extension>
    <extension
@@ -62,7 +68,7 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="ro.stefanprisca.physics.experiments.simulator.rcp.application"
+            application="org.eclipse.ui.ide.workbench"
             name="simulator.product">
          <property
                name="appName"

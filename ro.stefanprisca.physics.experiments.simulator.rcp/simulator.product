@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="simulator.product" uid="simulator" id="ro.stefanprisca.physics.experiments.simulator.rcp.product" application="ro.stefanprisca.physics.experiments.simulator.rcp.application" useFeatures="false" includeLaunchers="true">
+<product name="simulator.product" uid="simulator" id="ro.stefanprisca.physics.experiments.simulator.rcp.product" application="org.eclipse.ui.ide.workbench" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -83,11 +83,14 @@
       <plugin id="org.eclipse.m2e.maven.runtime"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
+      <plugin id="org.eclipse.recommenders.injection"/>
       <plugin id="org.eclipse.recommenders.utils"/>
       <plugin id="org.eclipse.swt"/>
       <plugin id="org.eclipse.swt.win32.win32.x86_64" fragment="true"/>
       <plugin id="org.eclipse.ui"/>
       <plugin id="org.eclipse.ui.workbench"/>
+      <plugin id="org.eclipse.xtend.lib"/>
+      <plugin id="org.eclipse.xtext.xbase.lib"/>
       <plugin id="org.jboss.netty"/>
       <plugin id="org.slf4j.api"/>
       <plugin id="org.w3c.css.sac"/>

@@ -1,4 +1,4 @@
-package ro.stefanprisca.physics.experiments.simulator;
+package ro.stefanprisca.physics.experiments.simulator.core;
 
 import java.io.File;
 import java.util.Set;
@@ -8,13 +8,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.recommenders.utils.gson.GsonUtil;
 
-import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
 import ro.stefanprisca.physics.experiments.simulator.rcp.Activator;
 import ro.stefanprisca.physics.experiments.simulator.rcp.preferences.PreferenceConstants;
 
-import com.google.gson.annotations.SerializedName;
 import com.google.inject.Inject;
 
 
@@ -36,11 +36,17 @@ public class ExperimentStorage {
 	
 	public Set<Experiment> getExperiments(){
 		TreeSet<Experiment> result=new TreeSet<Experiment>();
+		if(location.exists()){
+		
 		for (File jsonFile : FileUtils.listFiles(location, EXPERIMENTS_FILTER, TrueFileFilter.INSTANCE)) {
            Experiment exp=GsonUtil.deserialize(jsonFile, Experiment.class);
            exp.setLocation(jsonFile);
            result.add(exp);
         }
+		
+		}
 		return result;
 	}
+
+
 }
