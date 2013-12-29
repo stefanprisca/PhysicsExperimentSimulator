@@ -6,12 +6,12 @@ import java.util.regex.Pattern
 import ro.stefanprisca.physics.experiments.simulator.core.Function
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer
 import ro.stefanprisca.physics.experiments.simulator.core.Variable
+import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger
 
 class FunctionComputer implements IComputer {
 	private DelegatingMathComputer mathComputer =  new DelegatingMathComputer
 	private SimpleComputer simpleComputer= new SimpleComputer;
-	private static boolean computationOk = true
-	private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private final static Logger LOGGER = ExperimentLogger.instance
 	
 	def public computeFunction(Function f, List<Variable> variables){
 		var equation = f.equation.replaceAll("\\s+", "");
@@ -24,7 +24,6 @@ class FunctionComputer implements IComputer {
 			var assignment = equationFinal.split(MATHEQUALITY_PATTERN)
 			var vari = assignment.get(0).substring(assignment.get(0).indexOf("{") + 1, assignment.get(0).indexOf("}"))
 			var result = vari.getVariable(arguments)
-			println(result.id)
 			var resultValue = assignment.get(1).compute(arguments)
 			result.setValue(resultValue)
 			return result.value
@@ -73,8 +72,8 @@ class FunctionComputer implements IComputer {
 						intermediates.get(1))
 					
 					}catch(IllegalArgumentException ila){
-						LOGGER.severe("Division by zero occurred!")
-						computationOk=false
+						LOGGER.severe("Division by zero occurred in operation "+compOperation+"!")
+						LOGGER.severe(ila.message);
 					}
 				
 				}
@@ -89,10 +88,8 @@ class FunctionComputer implements IComputer {
 		}
 		result = Double.parseDouble(equation)
 		if(result.equals(Double.NaN)){
-			LOGGER.severe("Something very wrong happened! Please check the numbers and the above log")
-			
-			computationOk=false
-			}
+			LOGGER.severe("Something very wrong happened! Please check the numbers and the console log")
+		}
 		return result
 	}
 	
@@ -151,9 +148,6 @@ class FunctionComputer implements IComputer {
 			if ((variable as Variable).id.equals(id)) return (variable as Variable)
 		}
 	}
-	
-	def compIsOk(){
-		computationOk
-	}
+
 	
 }

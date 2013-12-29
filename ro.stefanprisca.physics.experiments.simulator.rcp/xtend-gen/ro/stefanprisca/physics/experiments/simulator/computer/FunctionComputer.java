@@ -9,12 +9,12 @@ import org.eclipse.xtext.xbase.lib.DoubleExtensions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.InputOutput;
 import ro.stefanprisca.physics.experiments.simulator.computer.DelegatingMathComputer;
 import ro.stefanprisca.physics.experiments.simulator.computer.SimpleComputer;
 import ro.stefanprisca.physics.experiments.simulator.core.Function;
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer;
 import ro.stefanprisca.physics.experiments.simulator.core.Variable;
+import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger;
 
 @SuppressWarnings("all")
 public class FunctionComputer implements IComputer {
@@ -32,12 +32,10 @@ public class FunctionComputer implements IComputer {
     }
   }.apply();
   
-  private static boolean computationOk = true;
-  
   private final static Logger LOGGER = new Function0<Logger>() {
     public Logger apply() {
-      Logger _logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-      return _logger;
+      Logger _instance = ExperimentLogger.getInstance();
+      return _instance;
     }
   }.apply();
   
@@ -67,8 +65,6 @@ public class FunctionComputer implements IComputer {
       int _indexOf_1 = _get_2.indexOf("}");
       String vari = _get.substring(_plus, _indexOf_1);
       Variable result = this.getVariable(vari, arguments);
-      String _id = result.getId();
-      InputOutput.<String>println(_id);
       String _get_3 = assignment[1];
       double resultValue = this.compute(_get_3, arguments);
       result.setValue(resultValue);
@@ -155,22 +151,25 @@ public class FunctionComputer implements IComputer {
               } catch (final Throwable _t) {
                 if (_t instanceof IllegalArgumentException) {
                   final IllegalArgumentException ila = (IllegalArgumentException)_t;
-                  FunctionComputer.LOGGER.severe("Division by zero occurred!");
-                  FunctionComputer.computationOk = false;
+                  String _plus_3 = ("Division by zero occurred in operation " + compOperation);
+                  String _plus_4 = (_plus_3 + "!");
+                  FunctionComputer.LOGGER.severe(_plus_4);
+                  String _message = ila.getMessage();
+                  FunctionComputer.LOGGER.severe(_message);
                 } else {
                   throw Exceptions.sneakyThrow(_t);
                 }
               }
             }
-            String _plus_3 = ("The result of operation " + compOperation);
-            String _plus_4 = (_plus_3 + " is: ");
-            String _plus_5 = (_plus_4 + Double.valueOf(intermediateResult));
-            FunctionComputer.LOGGER.info(_plus_5);
-            String _plus_6 = ("" + Double.valueOf(intermediateResult));
-            String _replace = equation.replace(operation, _plus_6);
-            equation = _replace;
-            String _plus_7 = ("The equation now is: " + equation);
+            String _plus_5 = ("The result of operation " + compOperation);
+            String _plus_6 = (_plus_5 + " is: ");
+            String _plus_7 = (_plus_6 + Double.valueOf(intermediateResult));
             FunctionComputer.LOGGER.info(_plus_7);
+            String _plus_8 = ("" + Double.valueOf(intermediateResult));
+            String _replace = equation.replace(operation, _plus_8);
+            equation = _replace;
+            String _plus_9 = ("The equation now is: " + equation);
+            FunctionComputer.LOGGER.info(_plus_9);
           }
           boolean _find_1 = matcher.find();
           _while_1 = _find_1;
@@ -182,8 +181,7 @@ public class FunctionComputer implements IComputer {
     result = _parseDouble;
     boolean _equals = Double.valueOf(result).equals(Double.valueOf(Double.NaN));
     if (_equals) {
-      FunctionComputer.LOGGER.severe("Something very wrong happened! Please check the numbers and the above log");
-      FunctionComputer.computationOk = false;
+      FunctionComputer.LOGGER.severe("Something very wrong happened! Please check the numbers and the console log");
     }
     return result;
   }
@@ -300,9 +298,5 @@ public class FunctionComputer implements IComputer {
       }
     }
     return null;
-  }
-  
-  public boolean compIsOk() {
-    return FunctionComputer.computationOk;
   }
 }

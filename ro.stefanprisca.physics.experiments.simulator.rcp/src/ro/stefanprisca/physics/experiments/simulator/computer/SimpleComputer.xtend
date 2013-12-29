@@ -4,8 +4,6 @@ import java.math.BigDecimal
 import java.util.regex.Pattern
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer
 
-import static org.eclipse.recommenders.utils.Checks.*
-
 class SimpleComputer implements IComputer {
 	
 	override compute(String equation, Object... arguments) throws IllegalArgumentException{
@@ -20,8 +18,13 @@ class SimpleComputer implements IComputer {
 			case "+":result=result.add(arg2) 
 			case "-":result=result.subtract(arg2)
 			case "/":{
-				ensureIsNotZero(arg2.intValue)
-				result=result.divide(arg2, BigDecimal.ROUND_HALF_UP)
+				if(arg2.doubleValue != 0)
+				{
+					result=result.divide(arg2, BigDecimal.ROUND_HALF_UP)
+					
+				}else{
+					throw new IllegalArgumentException();
+				}
 				
 			}
 			case "*":result=result.multiply(arg2)

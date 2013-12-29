@@ -17,10 +17,14 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.ui.console,
- org.eclipse.jdt.ui
+ org.eclipse.jdt.ui,
+ org.eclipse.core.resources;bundle-version="3.8.101",
+ org.eclipse.jface.text,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.forms;bundle-version="3.6.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: ro.stefanprisca.physics.experiments.simulator.computer,
- ro.stefanprisca.physics.experiments.simulator.core,
- ro.stefanprisca.physics.experiments.simulator.rcp.preferences
+ ro.stefanprisca.physics.experiments.simulator.core
 

@@ -1,5 +1,6 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -18,9 +19,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
@@ -28,7 +28,7 @@ import static ro.stefanprisca.physics.experiments.simulator.computer.ExperimentC
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
 import ro.stefanprisca.physics.experiments.simulator.core.ExperimentStorage;
 import ro.stefanprisca.physics.experiments.simulator.core.Function;
-import ro.stefanprisca.physics.experiments.simulator.rcp.perspectives.RuntimePerspective;
+import ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentFileEditorInput;
 
 import com.google.inject.Inject;
 
@@ -37,8 +37,8 @@ public class ExperimentsView extends ViewPart {
 	
 	public static final String ID = "ro.stefanprisca.physics.experiments.simulator.view";
 	
-	@Inject
-	private ExperimentStorage storage;
+	
+	private ExperimentStorage storage = ExperimentStorage.getInstance();
 
 	private Group details;
 	private ListViewer exViewer;
@@ -86,6 +86,20 @@ public class ExperimentsView extends ViewPart {
 		Button edit = new Button (contents, SWT.PUSH);
 		edit.setText("Edit");
 		edit.setLayoutData(buttonData);
+		edit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e){
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				try {
+					page.openEditor(new ExperimentFileEditorInput((Experiment)selection.getValue()), "ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentEditor");
+				} catch (PartInitException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		
 		
 		Button remove = new Button (contents, SWT.PUSH);
 		remove.setText("Remove");
@@ -117,6 +131,7 @@ public class ExperimentsView extends ViewPart {
 
 		details.setFocus();
 		final Experiment expr = (Experiment)selection.getValue();
+		
 		Label name = new Label(details, SWT.None);
 		name.setText("Name: "+expr.getName());
 		Label description = new Label(details, SWT.None);
@@ -124,6 +139,9 @@ public class ExperimentsView extends ViewPart {
 		Label formulasTxt = new Label(details, SWT.None);
 		formulasTxt.setText("Functions: ");
 		List formulas = new List(details, SWT.None);
+		
+		formulas.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
 		for(Function f: expr.getFunctions())
 			formulas.add(f.getEquation());
 
@@ -133,12 +151,24 @@ public class ExperimentsView extends ViewPart {
 		run.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e){
+				
 				compute(expr);
-				IWorkbenchWindow window = getViewSite().getWorkbenchWindow();
-				IWorkbenchPage page = window.getActivePage();
-				IPerspectiveRegistry registry = PlatformUI.getWorkbench().getPerspectiveRegistry();
-				page.setPerspective(registry.findPerspectiveWithId(RuntimePerspective.getID()));
-			
+						
+			}
+		});
+		
+		Button runFor = new Button(details, SWT.PUSH);
+		runFor.setText("Run for T");
+		runFor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		final Text tPeriod = new Text (details, SWT.None);
+		tPeriod.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		
+		runFor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e){
+				compute(expr, tPeriod.getText());
+						
 			}
 		});
 		

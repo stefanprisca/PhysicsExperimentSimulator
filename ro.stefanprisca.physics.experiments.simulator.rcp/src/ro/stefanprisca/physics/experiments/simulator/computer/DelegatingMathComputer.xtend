@@ -3,7 +3,6 @@ package ro.stefanprisca.physics.experiments.simulator.computer
 import com.google.inject.Inject
 import java.lang.reflect.Method
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer
-import ro.stefanprisca.physics.experiments.simulator.core.Variable
 
 import static org.eclipse.recommenders.utils.Checks.*
 

@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.eclipse.recommenders.utils.Checks;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer;
 
@@ -52,10 +51,15 @@ public class SimpleComputer implements IComputer {
     if (!_matched) {
       if (Objects.equal(operator,"/")) {
         _matched=true;
-        int _intValue = arg2.intValue();
-        Checks.ensureIsNotZero(_intValue);
-        BigDecimal _divide = result.divide(arg2, BigDecimal.ROUND_HALF_UP);
-        result = _divide;
+        double _doubleValue = arg2.doubleValue();
+        boolean _notEquals = (_doubleValue != 0);
+        if (_notEquals) {
+          BigDecimal _divide = result.divide(arg2, BigDecimal.ROUND_HALF_UP);
+          result = _divide;
+        } else {
+          IllegalArgumentException _illegalArgumentException = new IllegalArgumentException();
+          throw _illegalArgumentException;
+        }
       }
     }
     if (!_matched) {

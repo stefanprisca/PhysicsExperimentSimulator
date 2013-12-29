@@ -15,7 +15,7 @@ public interface IComputer {
 	public static final String UNARY_OPERATION = "\\(-"+OPERAND_PATTERN+"\\)";
 	
 	
-	public static final String NOPARANTH_OPERATION_PATTERN = "("+BINARY_OPERATION+"|"+UNARY_OPERATION+")";
+	public static final String NOPARANTH_OPERATION_PATTERN = "("+BINARY_OPERATION+"|"+UNARY_OPERATION+"|"+MATHFUNCTION_PATTERN+")";
 	public static final String PARANTHESISOP_PATTERN = "\\("+NOPARANTH_OPERATION_PATTERN+"\\)";
 	public static final String OPERATION_PATTERN= PARANTHESISOP_PATTERN + "|" +NOPARANTH_OPERATION_PATTERN;
 	public static final String ASSIGNMENT_PATTERN = VARIABLE_PATTERN + MATHEQUALITY_PATTERN + ".+";
