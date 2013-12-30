@@ -1,6 +1,5 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -8,6 +7,7 @@ import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -27,10 +27,7 @@ import org.eclipse.ui.part.ViewPart;
 import static ro.stefanprisca.physics.experiments.simulator.computer.ExperimentComputer.compute;
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
 import ro.stefanprisca.physics.experiments.simulator.core.ExperimentStorage;
-import ro.stefanprisca.physics.experiments.simulator.core.Function;
 import ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentFileEditorInput;
-
-import com.google.inject.Inject;
 
 public class ExperimentsView extends ViewPart {
 	
@@ -46,7 +43,11 @@ public class ExperimentsView extends ViewPart {
 
 	public void createPartControl(Composite parent) {
 		
-		final Composite contents = new Composite(parent, SWT.None);
+		final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		
+		final Composite contents = new Composite(sc, SWT.None);
+		
+		sc.setContent(contents);
 		contents.setLayout(new GridLayout(2, false));
 		
 		Text searchExpr=new Text(contents, SWT.BORDER|SWT.SEARCH);
@@ -64,7 +65,7 @@ public class ExperimentsView extends ViewPart {
 		GridData buttonData = new GridData(SWT.FILL, SWT.FILL, true, false);
 		
 		Button index = new Button (contents, SWT.PUSH);
-		index.setText("Re-index Experiments");
+		index.setText("Re-index");
 		index.setLayoutData(buttonData);
 		
 		index.addSelectionListener(new SelectionAdapter() {
@@ -122,6 +123,8 @@ public class ExperimentsView extends ViewPart {
 			}
 			
 		});
+		
+		contents.setSize(contents.computeSize(500, 600));
 	}
 	private void doSetUpDetails() {
 		for(Control c:details.getChildren()){
@@ -133,17 +136,17 @@ public class ExperimentsView extends ViewPart {
 		final Experiment expr = (Experiment)selection.getValue();
 		
 		Label name = new Label(details, SWT.None);
-		name.setText("Name: "+expr.getName());
+		name.setText("~Name: "+expr.getName());
 		Label description = new Label(details, SWT.None);
-		description.setText("Description: "+expr.getDescription());
+		description.setText("~Description: "+expr.getDescription());
 		Label formulasTxt = new Label(details, SWT.None);
 		formulasTxt.setText("Functions: ");
 		List formulas = new List(details, SWT.None);
 		
 		formulas.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
-		for(Function f: expr.getFunctions())
-			formulas.add(f.getEquation());
+		for(String f: expr.getFunctions())
+			formulas.add(f);
 
 		Button run = new Button(details, SWT.PUSH);
 		run.setText("Run the experiment");
@@ -161,9 +164,9 @@ public class ExperimentsView extends ViewPart {
 		runFor.setText("Run for T");
 		runFor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		final Text tPeriod = new Text (details, SWT.None);
+		final Text tPeriod = new Text (details, SWT.BORDER);
 		tPeriod.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		
+		tPeriod.setMessage("period T");
 		runFor.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e){
@@ -179,6 +182,7 @@ public class ExperimentsView extends ViewPart {
 	private void doGetExperiments() {
 		// TODO Auto-generated method stub
 		exViewer.setInput(storage.getExperiments());
+		exViewer.refresh();
 	}
 
 	/**

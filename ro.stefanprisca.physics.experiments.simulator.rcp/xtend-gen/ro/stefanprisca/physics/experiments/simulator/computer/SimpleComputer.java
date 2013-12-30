@@ -18,18 +18,13 @@ public class SimpleComputer implements IComputer {
     BigDecimal arg2 = _bigDecimal_1.setScale(12, BigDecimal.ROUND_HALF_UP);
     final Function1<String,String> _function = new Function1<String,String>() {
       public String apply(final String eq) {
-        String _xblockexpression = null;
-        {
-          Pattern _compile = Pattern.compile(IComputer.MATHOPERATOR_PATTERN);
-          Matcher matcher = _compile.matcher(eq);
-          String _xifexpression = null;
-          boolean _find = matcher.find();
-          if (_find) {
-            return matcher.group();
-          }
-          _xblockexpression = (_xifexpression);
+        Pattern _compile = Pattern.compile(IComputer.MATHOPERATOR_PATTERN);
+        Matcher matcher = _compile.matcher(eq);
+        boolean _find = matcher.find();
+        if (_find) {
+          return matcher.group();
         }
-        return _xblockexpression;
+        return null;
       }
     };
     String operator = _function.apply(equation);

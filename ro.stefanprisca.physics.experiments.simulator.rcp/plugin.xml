@@ -24,7 +24,7 @@
          point="org.eclipse.ui.views">
       <view
             name="ExperimentsView"
-            class="org.eclipse.recommenders.injection.ExtensionFactory:ro.stefanprisca.physics.experiments.simulator.rcp.ExperimentsView"
+            class="ro.stefanprisca.physics.experiments.simulator.rcp.ExperimentsView"
             id="ro.stefanprisca.physics.experiments.simulator.view">
       </view>
    </extension>

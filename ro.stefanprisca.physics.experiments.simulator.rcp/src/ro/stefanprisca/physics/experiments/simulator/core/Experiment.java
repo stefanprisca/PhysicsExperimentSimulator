@@ -3,7 +3,6 @@ package ro.stefanprisca.physics.experiments.simulator.core;
 import static org.eclipse.recommenders.utils.Checks.ensureIsNotNull;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class Experiment implements Uuidable, Comparable{
 	private String description;
 
 	@SerializedName("functions")
-	private List<Function> functions;
+	private List<String> functions;
 	
 	@SerializedName("variables")
 	private List<Variable> variables;
@@ -29,7 +28,7 @@ public class Experiment implements Uuidable, Comparable{
 	private File location;
 
 		
-	public Experiment (String name, String description, List<Function> functions, List<Variable> variables, UUID uuid){
+	public Experiment (String name, String description, List<String> functions, List<Variable> variables, UUID uuid){
 		ensureIsNotNull(name);
 		ensureIsNotNull(description);
 		ensureIsNotNull(functions);
@@ -83,11 +82,11 @@ public class Experiment implements Uuidable, Comparable{
 	public void setLocation(File location) {
 		this.location = location;
 	}
-	public List<Function> getFunctions() {
+	public List<String> getFunctions() {
 		return functions;
 	}
 
-	public void setFunctions(List<Function> functions) {
+	public void setFunctions(List<String> functions) {
 		this.functions = functions;
 	}
 
@@ -104,7 +103,7 @@ public class Experiment implements Uuidable, Comparable{
 	}
 
 	public String toString(){
-		return name+":~   "+description;
+		return name+":~   "+description.substring(0, Math.min(description.length(), 30))+"(...)";
 	}
 	
 }

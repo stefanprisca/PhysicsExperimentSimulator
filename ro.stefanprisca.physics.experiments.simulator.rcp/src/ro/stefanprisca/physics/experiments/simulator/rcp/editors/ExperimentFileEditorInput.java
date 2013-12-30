@@ -1,7 +1,6 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp.editors;
 
 import java.io.File;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
+import com.google.common.collect.Lists;
+
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
-import ro.stefanprisca.physics.experiments.simulator.core.Function;
 
 public class ExperimentFileEditorInput implements IFileEditorInput {
 
@@ -42,7 +42,6 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 	
 	@Override
 	public IStorage getStorage() throws CoreException {
-		// TODO Auto-generated method stub
 		return remote;
 	}
 
@@ -54,13 +53,11 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 
 	@Override
 	public ImageDescriptor getImageDescriptor() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return experiment.getName();
 	}
 	
@@ -69,34 +66,45 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 	}
 
 	public List<String> getEquations(){
-		ArrayList<String> eqs = new ArrayList<String>();
-		for(Function eq : experiment.getFunctions()){
-			eqs.add(eq.getEquation());
-		}
-		return eqs;
+		return experiment.getFunctions();
 	}
 	@Override
 	public IPersistableElement getPersistable() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getToolTipText() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Object getAdapter(Class adapter) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public IFile getFile() {
-		// TODO Auto-generated method stub
 		return remote;
 	}
 
+	public void setExperimentName(String text) {
+		// TODO Auto-generated method stub
+		experiment.setName(text);
+	}
+
+	public void setExperimentDesc(String text) {
+		experiment.setDescription(text);
+	}
+
+	public Experiment getExperiment() {
+		// TODO Auto-generated method stub
+		return experiment;
+	}
+
+	public void setEquations(String[] items) {
+		// TODO Auto-generated method stub
+		experiment.setFunctions(Lists.newArrayList(items));
+	}
 }

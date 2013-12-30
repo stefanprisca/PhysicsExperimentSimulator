@@ -5,9 +5,5 @@ Bundle-SymbolicName: ro.stefanprisca.physics.experiments.simulator.tests
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.core.runtime,
  org.junit,
- org.mockito,
- org.hamcrest,
- org.eclipse.recommenders.utils,
- ro.stefanprisca.physics.experiments.simulator.rcp,
- org.eclipse.xtext.xbase.lib
+ ro.stefanprisca.physics.experiments.simulator.rcp
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

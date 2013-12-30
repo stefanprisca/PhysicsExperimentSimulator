@@ -1,37 +1,16 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp.editors;
 
 
-import java.io.StringWriter;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.StringTokenizer;
-
-import org.eclipse.core.resources.IMarker;
+import java.io.File;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FontDialog;
+import org.eclipse.recommenders.utils.gson.GsonUtil;
 import org.eclipse.ui.*;
-import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.part.MultiPageEditorPart;
-import org.eclipse.ui.ide.IDE;
+import com.google.common.io.Files;
+import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
+import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger;
 
 /**
  * An example showing how to create a multi-page editor.
@@ -45,6 +24,8 @@ import org.eclipse.ui.ide.IDE;
 public class ExperimentEditor extends FormEditor implements IResourceChangeListener{
 
 	
+	private boolean dirty = false;
+
 	@Override
     public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
         if(! (editorInput instanceof ExperimentFileEditorInput)){
@@ -72,8 +53,18 @@ public class ExperimentEditor extends FormEditor implements IResourceChangeListe
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
+		ExperimentFileEditorInput input = (ExperimentFileEditorInput) getEditorInput();
+		Experiment newExpr = input.getExperiment();
 		
+		String contents = GsonUtil.serialize(newExpr);
+		
+		File json  = input.getExperiment().getLocation();
+		try {
+			Files.write(contents.getBytes(), json);
+		} catch (Exception e) {
+			ExperimentLogger.getInstance().severe("Failed to save file! \n" + e.getMessage());
+		}
+		this.setDirty(false);
 	}
 
 	@Override
@@ -88,6 +79,14 @@ public class ExperimentEditor extends FormEditor implements IResourceChangeListe
 		return false;
 	}
 
-
+	public void setDirty(boolean dirtyS){
+		this.dirty = dirtyS;
+		editorDirtyStateChanged();
+	}
+	
+	@Override
+	public boolean isDirty(){
+		return dirty;
+	}
 	
 }

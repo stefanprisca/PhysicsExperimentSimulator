@@ -20,6 +20,6 @@ public interface IComputer {
 	public static final String OPERATION_PATTERN= PARANTHESISOP_PATTERN + "|" +NOPARANTH_OPERATION_PATTERN;
 	public static final String ASSIGNMENT_PATTERN = VARIABLE_PATTERN + MATHEQUALITY_PATTERN + ".+";
 	
-	public double compute(String equation, Object...arguments);
+	public double compute(String equation, Object...arguments) throws Exception;
 	
 }

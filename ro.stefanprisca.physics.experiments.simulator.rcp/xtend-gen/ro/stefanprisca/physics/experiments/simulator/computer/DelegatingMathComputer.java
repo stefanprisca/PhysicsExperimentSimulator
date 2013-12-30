@@ -70,8 +70,7 @@ public class DelegatingMathComputer implements IComputer {
     for (final Object arg : args) {
       {
         parameters[i] = (((Double) arg)).doubleValue();
-        int _plus = (i + 1);
-        i = _plus;
+        i = (i + 1);
       }
     }
     return parameters;

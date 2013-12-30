@@ -13,12 +13,14 @@ class FunctionComputer implements IComputer {
 	private SimpleComputer simpleComputer= new SimpleComputer;
 	private final static Logger LOGGER = ExperimentLogger.instance
 	
-	def public computeFunction(Function f, List<Variable> variables){
-		var equation = f.equation.replaceAll("\\s+", "");
+	def public computeFunction(String f, List<Variable> variables) throws Exception
+	{
+		var equation = f.replaceAll("\\s+", "");
 		computeEquationWithAssignment(equation, variables.toArray)
 	}
 	
-	def computeEquationWithAssignment(String equationFinal, Object...arguments){
+	def computeEquationWithAssignment(String equationFinal, Object...arguments) throws Exception
+	{
 		var matcher = Pattern.compile(IComputer.ASSIGNMENT_PATTERN).matcher(equationFinal)
 		if(matcher.find){
 			var assignment = equationFinal.split(MATHEQUALITY_PATTERN)
@@ -31,7 +33,8 @@ class FunctionComputer implements IComputer {
 			return equationFinal.compute(arguments)
 	}
 	
-	override compute(String equationFinal, Object...arguments){
+	override compute(String equationFinal, Object...arguments) throws Exception
+	{
 		var equation = equationFinal
 		var double result
 		var intermediates = newDoubleArrayOfSize(2)
@@ -67,14 +70,8 @@ class FunctionComputer implements IComputer {
 					nextInter = nextInter + 1
 				}
 				LOGGER.info("The intermediate results are " + intermediates.toString)
-				try{		
-						intermediateResult = simpleComputer.compute(compOperation, intermediates.get(0),
-						intermediates.get(1))
-					
-					}catch(IllegalArgumentException ila){
-						LOGGER.severe("Division by zero occurred in operation "+compOperation+"!")
-						LOGGER.severe(ila.message);
-					}
+				intermediateResult = simpleComputer.compute(compOperation, intermediates.get(0),
+				intermediates.get(1))
 				
 				}
 				LOGGER.info(
