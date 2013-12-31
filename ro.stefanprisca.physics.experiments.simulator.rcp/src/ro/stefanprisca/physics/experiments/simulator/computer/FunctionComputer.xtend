@@ -9,88 +9,90 @@ import ro.stefanprisca.physics.experiments.simulator.core.Variable
 import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger
 
 class FunctionComputer implements IComputer {
-	private DelegatingMathComputer mathComputer =  new DelegatingMathComputer
-	private SimpleComputer simpleComputer= new SimpleComputer;
+	private DelegatingMathComputer mathComputer = new DelegatingMathComputer
+	private SimpleComputer simpleComputer = new SimpleComputer;
 	private final static Logger LOGGER = ExperimentLogger.instance
-	
+
 	def public computeFunction(String f, List<Variable> variables) throws Exception
 	{
 		var equation = f.replaceAll("\\s+", "");
 		computeEquationWithAssignment(equation, variables.toArray)
 	}
-	
-	def computeEquationWithAssignment(String equationFinal, Object...arguments) throws Exception
+
+	def computeEquationWithAssignment(String equationFinal, Object... arguments) throws Exception
 	{
 		var matcher = Pattern.compile(IComputer.ASSIGNMENT_PATTERN).matcher(equationFinal)
-		if(matcher.find){
+		if (matcher.find) {
 			var assignment = equationFinal.split(MATHEQUALITY_PATTERN)
 			var vari = assignment.get(0).substring(assignment.get(0).indexOf("{") + 1, assignment.get(0).indexOf("}"))
 			var result = vari.getVariable(arguments)
 			var resultValue = assignment.get(1).compute(arguments)
 			result.setValue(resultValue)
 			return result.value
-		}else
+		} else
 			return equationFinal.compute(arguments)
 	}
-	
-	override compute(String equationFinal, Object...arguments) throws Exception
+
+	override compute(String equationFinal, Object... arguments) throws Exception
 	{
 		var equation = equationFinal
 		var double result
 		var intermediates = newDoubleArrayOfSize(2)
 		var boolean stillFinds = true
-		while(stillFinds){
+		while (stillFinds) {
 			var matcher = Pattern.compile(IComputer.OPERATION_PATTERN).matcher(equation)
 			stillFinds = false
 			while (matcher.find) {
 				stillFinds = true
 				var operation = matcher.group
 				LOGGER.info("The operation is: " + operation)
+
+				//break the operation parenthesis
 				var compOperation = [ String eq |
 					var matcherInternal = Pattern.compile(IComputer.NOPARANTH_OPERATION_PATTERN).matcher(eq);
 					if(matcherInternal.find) return matcherInternal.group
 				].apply(operation)
-				
-				var double intermediateResult 
-				
-				if(operation.matches(UNARY_OPERATION)){
-					
+
+				var double intermediateResult
+
+				if (operation.matches(UNARY_OPERATION)) {
+
 					var operand = operation.replaceAll("[()-]", "");
 					LOGGER.info("Operand to be negated is: " + operand)
 					intermediateResult = -operand.computeOperand(arguments)
-				}else{
+				} else {
 					var nextInter = 0
-					intermediates= newDoubleArrayOfSize(2)
-				
-				for (operand : compOperation.split(MATHOPERATOR_PATTERN)) {
-					LOGGER.info("Operand is: " + operand)
-					intermediates.set(nextInter, operand.computeOperand(arguments))
-					LOGGER.info(
-						"The result of the intermediate operation " + operand + " is: " + intermediates.get(nextInter))
-					nextInter = nextInter + 1
-				}
-				LOGGER.info("The intermediate results are " + intermediates.toString)
-				intermediateResult = simpleComputer.compute(compOperation, intermediates.get(0),
-				intermediates.get(1))
-				
+					intermediates = newDoubleArrayOfSize(2)
+
+					for (operand : compOperation.split(MATHOPERATOR_PATTERN)) {
+						LOGGER.info("Operand is: " + operand)
+						intermediates.set(nextInter, operand.computeOperand(arguments))
+						LOGGER.info(
+							"The result of the intermediate operation " + operand + " is: " +
+								intermediates.get(nextInter))
+						nextInter = nextInter + 1
+					}
+					LOGGER.info("The intermediate results are " + intermediates.toString)
+					intermediateResult = simpleComputer.compute(compOperation, intermediates.get(0),
+						intermediates.get(1))
+
 				}
 				LOGGER.info(
 					"The result of operation " + compOperation + " is: " + intermediateResult
 				)
 				equation = equation.replace(operation, "" + intermediateResult);
 				LOGGER.info("The equation now is: " + equation);
-			
-			
+
 			}
 		}
 		result = Double.parseDouble(equation)
-		if(result.equals(Double.NaN)){
+		if (result.equals(Double.NaN)) {
 			LOGGER.severe("Something very wrong happened! Please check the numbers and the console log")
 		}
 		return result
 	}
-	
-	def private computeOperand(String operand, Object...arguments){
+
+	def private computeOperand(String operand, Object... arguments) {
 		if (operand.matches(MATHFUNCTION_PATTERN)) {
 			val method = operand.substring(0, operand.indexOf("("))
 			var m = Pattern.compile(method).matcher(DelegatingMathComputer.mathMethods)
@@ -99,52 +101,51 @@ class FunctionComputer implements IComputer {
 			LOGGER.info("Arguments for the math function are: " + arg.toString)
 			if (m.find())
 				return mathComputer.compute(method, arg.toArray)
+			else
+				throw new IllegalArgumentException("The math function specified does not exist!")
 		} else if (operand.matches(VARIABLE_PATTERN)) {
 			var vari = operand.substring(operand.indexOf("{") + 1, operand.indexOf("}"))
 			return vari.getVariableValue(arguments)
 		} else if (operand.matches(NUMBER_PATTERN)) {
 			return Double.parseDouble(operand)
 		}
-		
+
 	}
-	
-	
-	def private getVariables(String s, Object...arguments){
-		var ss=s.substring(s.indexOf("(")+1, s.indexOf(")"))
+
+	def private getVariables(String s, Object... arguments) {
+		var ss = s.substring(s.indexOf("(") + 1, s.indexOf(")"))
 		var rez = newDoubleArrayOfSize(arguments.length)
 		var i = -1
-		
-		for(sVar : ss.split(","))
-		{
-			i=i+1
-			if(sVar.matches(VARIABLE_PATTERN))
-				rez.set(i, getVariableValue(sVar.substring(sVar.indexOf("{")+1, sVar.indexOf("}")), arguments))
+
+		for (sVar : ss.split(",")) {
+			i = i + 1
+			if (sVar.matches(VARIABLE_PATTERN))
+				rez.set(i, getVariableValue(sVar.substring(sVar.indexOf("{") + 1, sVar.indexOf("}")), arguments))
 			else
-				rez.set(i, Double.parseDouble(sVar))	
-		}	
-		var finalResult = newDoubleArrayOfSize(i+1)
-		while(i>=0){
+				rez.set(i, Double.parseDouble(sVar))
+		}
+		var finalResult = newDoubleArrayOfSize(i + 1)
+		while (i >= 0) {
 			finalResult.set(i, rez.get(i))
-			i=i-1
+			i = i - 1
 		}
 		return finalResult
 	}
-	
+
 	def private getVariableValue(String id, Object... variables) {
-		
-		for(variable:variables){
-			
-			if ((variable as Variable).id.equals(id)) return (variable as Variable).value
+
+		for (variable : variables) {
+
+			if((variable as Variable).id.equals(id)) return (variable as Variable).value
 		}
-		return 0.0
+		throw new IllegalArgumentException("Variable " + id+" could not be found! Please ensure it is declared.")
 	}
-	
-	def private getVariable(String id, Object... variables){
-		for(variable:variables){
-			
-			if ((variable as Variable).id.equals(id)) return (variable as Variable)
+
+	def private getVariable(String id, Object... variables) {
+		for (variable : variables) {
+
+			if((variable as Variable).id.equals(id)) return (variable as Variable)
 		}
 	}
 
-	
 }

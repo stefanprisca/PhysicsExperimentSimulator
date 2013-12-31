@@ -167,6 +167,9 @@ public class FunctionComputer implements IComputer {
         final double[] _converted_arg_1 = (double[])arg;
         Object[] _array = ((List<Double>)Conversions.doWrapArray(_converted_arg_1)).toArray();
         return this.mathComputer.compute(method, _array);
+      } else {
+        IllegalArgumentException _illegalArgumentException = new IllegalArgumentException("The math function specified does not exist!");
+        throw _illegalArgumentException;
       }
     } else {
       boolean _matches_1 = operand.matches(IComputer.VARIABLE_PATTERN);
@@ -233,7 +236,8 @@ public class FunctionComputer implements IComputer {
         return ((Variable) variable).getValue();
       }
     }
-    return 0.0;
+    IllegalArgumentException _illegalArgumentException = new IllegalArgumentException((("Variable " + id) + " could not be found! Please ensure it is declared."));
+    throw _illegalArgumentException;
   }
   
   private Variable getVariable(final String id, final Object... variables) {

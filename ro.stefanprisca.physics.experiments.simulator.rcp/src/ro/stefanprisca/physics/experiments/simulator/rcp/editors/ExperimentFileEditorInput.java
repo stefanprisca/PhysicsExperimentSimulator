@@ -18,6 +18,7 @@ import org.eclipse.ui.IPersistableElement;
 import com.google.common.collect.Lists;
 
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
+import ro.stefanprisca.physics.experiments.simulator.core.Variable;
 
 public class ExperimentFileEditorInput implements IFileEditorInput {
 
@@ -106,5 +107,53 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 	public void setEquations(String[] items) {
 		// TODO Auto-generated method stub
 		experiment.setFunctions(Lists.newArrayList(items));
+	}
+
+	public List<Variable> getVariables() {
+		// TODO Auto-generated method stub
+		return experiment.getVariables();
+	}
+
+	public void addVariable(String id, String valS) throws NumberFormatException, IllegalArgumentException{
+		// TODO Auto-generated method stub
+		double val = 0;
+		
+		if(!valS.isEmpty()){
+			val = Double.parseDouble(valS);
+		}
+		Variable var = new Variable(id, val);
+		if(experiment.getVariables().contains(var)){
+			throw new IllegalArgumentException("Variable allready exists!");
+		}
+		experiment.getVariables().add(var);
+	}
+
+	public void setVariable(Variable old, String id, String valS) throws NumberFormatException, IllegalArgumentException{
+		// TODO Auto-generated method stub
+		double val = 0;
+		
+		if(!valS.isEmpty()){
+			val = Double.parseDouble(valS);
+		}
+		Variable newVar = new Variable(id, val);
+		if(experiment.getVariables().contains(newVar)){
+			throw new IllegalArgumentException("Variable allready exists!");
+		}
+		List<Variable> vars = experiment.getVariables();
+		int index = vars.indexOf(old);
+		vars.set(index, newVar);
+		
+	}
+	
+	@Override 
+	public boolean equals(Object obj) {
+		if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof IFileEditorInput)) {
+            return false;
+        }
+        IFileEditorInput other = (IFileEditorInput) obj;
+        return getFile().equals(other.getFile());
 	}
 }

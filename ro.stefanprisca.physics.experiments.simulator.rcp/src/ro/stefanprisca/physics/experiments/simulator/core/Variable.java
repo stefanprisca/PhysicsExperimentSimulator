@@ -6,7 +6,7 @@ import org.eclipse.recommenders.utils.Uuidable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Variable implements Comparable<Object>, Uuidable {
+public class Variable implements Comparable<Variable>, Uuidable {
 
 	@SerializedName("id")
 	private String id;
@@ -25,11 +25,6 @@ public class Variable implements Comparable<Object>, Uuidable {
 		return null;
 	}
 
-	@Override
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	public double getValue() {
 		return value;
@@ -47,4 +42,21 @@ public class Variable implements Comparable<Object>, Uuidable {
 		this.id = id;
 	}
 
+	@Override
+	public int compareTo(Variable o) {
+		// TODO Auto-generated method stub
+		return this.id.compareTo(o.id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		if(obj == null){
+			return false;
+		}
+		if(obj == this){
+			return true;
+		}
+		return this.id.equals(((Variable)obj).getId()) && this.value == ((Variable)obj).getValue();
+	}
 }

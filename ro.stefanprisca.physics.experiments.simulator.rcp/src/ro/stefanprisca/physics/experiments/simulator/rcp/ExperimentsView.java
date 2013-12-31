@@ -2,6 +2,7 @@ package ro.stefanprisca.physics.experiments.simulator.rcp;
 
 import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ListViewer;
@@ -41,7 +42,7 @@ public class ExperimentsView extends ViewPart {
 	private ListViewer exViewer;
     private IViewerObservableValue selection;
 
-	public void createPartControl(Composite parent) {
+	public void createPartControl(final Composite parent) {
 		
 		final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		
@@ -55,7 +56,7 @@ public class ExperimentsView extends ViewPart {
 		searchExpr.setMessage("Search for experiments!");
 		
 		exViewer = new ListViewer(contents);
-		List experList=exViewer.getList();
+		final List experList=exViewer.getList();
 		experList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 4));
 		
 		
@@ -84,7 +85,7 @@ public class ExperimentsView extends ViewPart {
 		
 		
 		
-		Button edit = new Button (contents, SWT.PUSH);
+		final Button edit = new Button (contents, SWT.PUSH);
 		edit.setText("Edit");
 		edit.setLayoutData(buttonData);
 		edit.addSelectionListener(new SelectionAdapter() {
@@ -99,12 +100,27 @@ public class ExperimentsView extends ViewPart {
 				}
 			}
 		});
+		edit.setEnabled(false);
 		
 		
-		
-		Button remove = new Button (contents, SWT.PUSH);
+		final Button remove = new Button (contents, SWT.PUSH);
 		remove.setText("Remove");
 		remove.setLayoutData(buttonData);
+		
+		remove.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e){
+				if(MessageDialog.openConfirm(parent.getShell(), "Confirm Deletion", "Are you sure you want to delete it?\n"+
+																	"This will remove the file from the file-system as well.")){
+					Experiment exp = (Experiment)selection.getValue();
+					exp.getLocation().delete();
+					exViewer.remove(exp);
+				}
+			}
+		});
+		
+		remove.setEnabled(false);
+		
 		
 		details = new Group(contents, SWT.BORDER);
 		
@@ -119,9 +135,19 @@ public class ExperimentsView extends ViewPart {
 			@Override
 			public void open(OpenEvent event) {
 				// TODO Auto-generated method stub
-				doSetUpDetails();
+				if(selection.getValue() != null){
+					doSetUpDetails();
+				}
 			}
 			
+		});
+		
+		experList.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				remove.setEnabled(true);
+				edit.setEnabled(true);
+			}
 		});
 		
 		contents.setSize(contents.computeSize(500, 600));
@@ -138,7 +164,7 @@ public class ExperimentsView extends ViewPart {
 		Label name = new Label(details, SWT.None);
 		name.setText("~Name: "+expr.getName());
 		Label description = new Label(details, SWT.None);
-		description.setText("~Description: "+expr.getDescription());
+		description.setText("~Description: "+expr.getDescription().substring(0, Math.min(expr.getDescription().length(), 100)));
 		Label formulasTxt = new Label(details, SWT.None);
 		formulasTxt.setText("Functions: ");
 		List formulas = new List(details, SWT.None);
@@ -170,7 +196,8 @@ public class ExperimentsView extends ViewPart {
 		runFor.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e){
-				compute(expr, tPeriod.getText());
+				if(!tPeriod.getText().isEmpty())
+					compute(expr, tPeriod.getText());
 						
 			}
 		});
