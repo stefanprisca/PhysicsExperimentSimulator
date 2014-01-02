@@ -57,6 +57,22 @@
                   style="push">
             </command>
          </menu>
+         <menu
+               label="Help">
+            <command
+                  commandId="org.eclipse.ui.help.displayHelp"
+                  label="Help"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               label="Views">
+            <command
+                  commandId="org.eclipse.ui.views.showView"
+                  label="show view"
+                  style="push">
+            </command>
+         </menu>
       </menuContribution>
    </extension>
    <extension
@@ -102,6 +118,36 @@
             id="ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentEditor"
             name="Experiment Editor">
       </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="ro.stefanprisca.physics.experiments.simulator.rcp.newexperiment"
+            name="Experiment Wizards">
+      </category>
+      <wizard
+            category="ro.stefanprisca.physics.experiments.simulator.rcp.newexperiment"
+            class="ro.stefanprisca.physics.experiments.simulator.rcp.wizards.NewExperimentWizard"
+            icon="icons/sample.gif"
+            id="ro.stefanprisca.physics.experiments.simulator.rcp.wizards.NewExperimentWizard"
+            name="Experiment File">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="tocgettingStarted.xml">
+      </toc>
+      <toc
+            file="tocgettingstarted.xml">
+      </toc>
+      <toc
+            file="tocsamples.xml">
+      </toc>
    </extension>
 
 </plugin>

@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.events.IExpansionListener;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
@@ -319,6 +320,19 @@ public class FieldEditorsPage extends FormPage {
 			public void widgetSelected(SelectionEvent e){
 				editVar.setEnabled(true);
 				removeVar.setEnabled(true);
+			}
+		});
+		
+		varSection.addExpansionListener(new ExpansionAdapter(){
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				// TODO Auto-generated method stub
+				if (!e.getState()) {
+					editVar.setEnabled(false);
+					removeVar.setEnabled(false);
+				} else{
+					variableTableViewer.refresh();
+				}
 			}
 		});
 	}

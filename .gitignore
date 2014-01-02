@@ -29,3 +29,5 @@ rebel.xml
 *.licensed
 *.aux
 *_trace
+/Doc/InsideHelp/Help/nbproject/private/
+/ro.stefanprisca.physics.experiments.simulator.rcp/html/nbproject/private/

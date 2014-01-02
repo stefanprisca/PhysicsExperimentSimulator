@@ -1,5 +1,6 @@
 package ro.stefanprisca.physics.experiments.simulator.computer;
 
+import com.google.common.annotations.VisibleForTesting;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -29,7 +30,7 @@ public class FunctionComputer implements IComputer {
     }
   }.apply();
   
-  private final static Logger LOGGER = ExperimentLogger.getInstance();
+  private static Logger LOGGER = ExperimentLogger.getInstance();
   
   public double computeFunction(final String f, final List<Variable> variables) throws Exception {
     double _xblockexpression = (double) 0;
@@ -194,6 +195,10 @@ public class FunctionComputer implements IComputer {
     int _plus = (_indexOf + 1);
     int _indexOf_1 = s.indexOf(")");
     String ss = s.substring(_plus, _indexOf_1);
+    boolean _isEmpty = ss.isEmpty();
+    if (_isEmpty) {
+      return new double[0];
+    }
     int _length = arguments.length;
     double[] rez = new double[_length];
     int i = (-1);
@@ -249,5 +254,11 @@ public class FunctionComputer implements IComputer {
       }
     }
     return null;
+  }
+  
+  @VisibleForTesting
+  public Logger setLogger(final Logger logger) {
+    Logger _LOGGER = FunctionComputer.LOGGER = logger;
+    return _LOGGER;
   }
 }

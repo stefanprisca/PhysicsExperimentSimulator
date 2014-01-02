@@ -103,7 +103,7 @@ public class Experiment implements Uuidable, Comparable{
 	}
 
 	public String toString(){
-		return name+":~   "+description.substring(0, Math.min(description.length(), 30))+"(...)";
+		return name+":~   "+description.substring(0, Math.min(description.length(), 40));
 	}
 	
 }

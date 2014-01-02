@@ -23,7 +23,7 @@ import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogge
  */
 public class ExperimentEditor extends FormEditor implements IResourceChangeListener{
 
-	
+	private static final String ID = "ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentEditor";
 	private boolean dirty = false;
 
 	@Override
@@ -87,6 +87,10 @@ public class ExperimentEditor extends FormEditor implements IResourceChangeListe
 	@Override
 	public boolean isDirty(){
 		return dirty;
+	}
+
+	public static String getId() {
+		return ID;
 	}
 	
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Getting Started" link_to="toc.xml#gettingStarted" topic="html/gettingStarted/ExperimentBasics.html"> 
+	<topic label="Storing Experiments"  href="html/gettingStarted/StoringtheExperiments.html"> 
+	</topic>
+	<topic href="html/gettingStarted/ViewAndRun.html" label="View And Run">
+		<topic label="Running Experiments" href="html/gettingStarted/RunningExperiments.html" /> 
+	</topic>
+ <topic href="html/gettingStarted/RuntimeConcepts.html" label="Runtime Concepts">
+ </topic>
+ <topic href="html/gettingStarted/EditingExperiments.html" label="Editing Experiments">
+ </topic> 
+</toc>

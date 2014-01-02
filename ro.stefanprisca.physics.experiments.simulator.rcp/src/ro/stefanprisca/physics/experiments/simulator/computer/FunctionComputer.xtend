@@ -1,9 +1,9 @@
 package ro.stefanprisca.physics.experiments.simulator.computer
 
+import com.google.common.annotations.VisibleForTesting
 import java.util.List
 import java.util.logging.Logger
 import java.util.regex.Pattern
-import ro.stefanprisca.physics.experiments.simulator.core.Function
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer
 import ro.stefanprisca.physics.experiments.simulator.core.Variable
 import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger
@@ -11,7 +11,7 @@ import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogge
 class FunctionComputer implements IComputer {
 	private DelegatingMathComputer mathComputer = new DelegatingMathComputer
 	private SimpleComputer simpleComputer = new SimpleComputer;
-	private final static Logger LOGGER = ExperimentLogger.instance
+	private static Logger LOGGER = ExperimentLogger.instance
 
 	def public computeFunction(String f, List<Variable> variables) throws Exception
 	{
@@ -114,6 +114,9 @@ class FunctionComputer implements IComputer {
 
 	def private getVariables(String s, Object... arguments) {
 		var ss = s.substring(s.indexOf("(") + 1, s.indexOf(")"))
+		if(ss.empty){
+			return newDoubleArrayOfSize(0)
+		}
 		var rez = newDoubleArrayOfSize(arguments.length)
 		var i = -1
 
@@ -146,6 +149,11 @@ class FunctionComputer implements IComputer {
 
 			if((variable as Variable).id.equals(id)) return (variable as Variable)
 		}
+	}
+	
+	@VisibleForTesting
+	def public setLogger(Logger logger){
+		LOGGER = logger
 	}
 
 }

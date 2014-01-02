@@ -57,6 +57,6 @@ public class Variable implements Comparable<Variable>, Uuidable {
 		if(obj == this){
 			return true;
 		}
-		return this.id.equals(((Variable)obj).getId()) && this.value == ((Variable)obj).getValue();
+		return this.id.equals(((Variable)obj).getId());
 	}
 }

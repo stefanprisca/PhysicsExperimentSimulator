@@ -1,5 +1,6 @@
 package ro.stefanprisca.physics.experiments.simulator.computer;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogge
 
 @SuppressWarnings("all")
 public class ExperimentComputer {
-  private final static Logger LOGGER = ExperimentLogger.getInstance();
+  private static Logger LOGGER = ExperimentLogger.getInstance();
   
   private static FunctionComputer fComp = new Function0<FunctionComputer>() {
     public FunctionComputer apply() {
@@ -162,5 +163,11 @@ public class ExperimentComputer {
       }
       _while = (t > 0);
     }
+  }
+  
+  @VisibleForTesting
+  public Logger setLogger(final Logger logger) {
+    Logger _LOGGER = ExperimentComputer.LOGGER = logger;
+    return _LOGGER;
   }
 }

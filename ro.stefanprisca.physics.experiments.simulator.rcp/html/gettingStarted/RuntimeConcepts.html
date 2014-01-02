@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Runtime Concepts</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        <div>Runtime Concepts</div>
+        <p>
+            These are some things that you need to keep in mind when editing and
+            running experiments using this software:
+        </p>
+        <ol>
+            <li>
+                Equations are computed in the order that they are written!
+                The result of the last equation is considered to be the result of the
+                experiment.
+            </li>
+            <li>
+                Experiment variables are marked with surrounding '{}'. e.g.:'{a}'<br>
+                \t <strong>Note:</strong> if you do not surround the variables with '{}' than the 
+                parser will not know how to compute them.
+            </li>
+            <li>
+                All variables used in the equations must also be declared in the variable section!<br>
+                The equation editor will ensure there are no undeclared variables and will ask if you want to add
+                the undeclared ones. It is <strong>highly</strong> recommended to do so!
+            </li>
+            <li>
+                You can use methods from java.lang.Math class to compute your experiments. <br>
+                There is a button in the equation editor dialog that allows you to look through this methods.<br>
+                \t <strong>Note:</strong> After inserting a method through the dialog, you need to complete the variable fields!
+            </li>
+            <li>
+                Numbers used in equation <strong>MUST</strong> be in decimal form! e.g.: 2.0 and <strong>NOT</strong> 2<br>
+            </li>
+        </ol>
+        <p>
+            Beside the above, there is not much to say. Keep in mind that the software may still be buggy.
+        </p>
+    </body>
+</html>

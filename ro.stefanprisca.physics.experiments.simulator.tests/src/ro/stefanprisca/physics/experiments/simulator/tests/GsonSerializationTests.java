@@ -32,7 +32,7 @@ public class GsonSerializationTests {
 	
 	@Before
 	public void init(){
-		expr=new Experiment("newExperiment","Some test experiment", new ArrayList<Function>(), new ArrayList<Variable>(), UUID.randomUUID());
+		expr=new Experiment("newExperiment","Some test experiment", new ArrayList<String>(), new ArrayList<Variable>(), UUID.randomUUID());
 		location=tempFolder.getRoot();
 	}
 	private File addFileToLocationWithContents(String fileName, File parent, String contents) throws

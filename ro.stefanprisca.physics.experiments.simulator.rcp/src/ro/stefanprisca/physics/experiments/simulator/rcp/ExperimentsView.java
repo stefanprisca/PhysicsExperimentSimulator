@@ -7,8 +7,13 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -28,7 +33,9 @@ import org.eclipse.ui.part.ViewPart;
 import static ro.stefanprisca.physics.experiments.simulator.computer.ExperimentComputer.compute;
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
 import ro.stefanprisca.physics.experiments.simulator.core.ExperimentStorage;
+import ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentEditor;
 import ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentFileEditorInput;
+import ro.stefanprisca.physics.experiments.simulator.rcp.wizards.NewExperimentWizard;
 
 public class ExperimentsView extends ViewPart {
 	
@@ -51,15 +58,27 @@ public class ExperimentsView extends ViewPart {
 		sc.setContent(contents);
 		contents.setLayout(new GridLayout(2, false));
 		
-		Text searchExpr=new Text(contents, SWT.BORDER|SWT.SEARCH);
+		final Text searchExpr=new Text(contents, SWT.BORDER|SWT.SEARCH);
 		searchExpr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		searchExpr.setMessage("Search for experiments!");
+		searchExpr.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				doGetExperiments(searchExpr.getText());
+			}
+		});
+		
+		
 		
 		exViewer = new ListViewer(contents);
-		final List experList=exViewer.getList();
-		experList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 4));
-		
-		
+		exViewer.setComparator(new ViewerComparator());
+		List experList=exViewer.getList();
+		GridData listData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 5);
+		listData.widthHint = 300;
+		listData.heightHint = 200;
+		experList.setLayoutData(listData);
 		
 		
 		
@@ -77,11 +96,22 @@ public class ExperimentsView extends ViewPart {
 		});
 		
 		Button addNew = new Button (contents, SWT.PUSH);
-		addNew.setText("Add a new experiment");
+		addNew.setText("Add New");
 		addNew.setLayoutData(buttonData);
 		
-		addNew.setEnabled(false);
-		
+		//addNew.setEnabled(false);
+		addNew.addSelectionListener(new SelectionAdapter() {
+			  @Override
+			  public void widgetSelected(SelectionEvent e) {
+			    WizardDialog wizardDialog = new WizardDialog(parent.getShell(),
+			      new NewExperimentWizard());
+			    if (wizardDialog.open() == Window.OK) {
+			      System.out.println("Ok pressed");
+			    } else {
+			      System.out.println("Cancel pressed");
+			       }
+			  }
+			}); 
 		
 		
 		
@@ -92,8 +122,9 @@ public class ExperimentsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e){
 				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				ExperimentFileEditorInput input = new ExperimentFileEditorInput((Experiment)selection.getValue());
 				try {
-					page.openEditor(new ExperimentFileEditorInput((Experiment)selection.getValue()), "ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentEditor");
+					page.openEditor(input, ExperimentEditor.getId());
 				} catch (PartInitException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -124,8 +155,8 @@ public class ExperimentsView extends ViewPart {
 		
 		details = new Group(contents, SWT.BORDER);
 		
-		details.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		details.setVisible(false);
+		details.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4));
+		details.setVisible(true);
 		selection=ViewersObservables.observeSingleSelection(exViewer);
 
 		exViewer.setContentProvider(new ArrayContentProvider());
@@ -150,7 +181,7 @@ public class ExperimentsView extends ViewPart {
 			}
 		});
 		
-		contents.setSize(contents.computeSize(500, 600));
+		contents.setSize(contents.computeSize(550, 600));
 	}
 	private void doSetUpDetails() {
 		for(Control c:details.getChildren()){
@@ -207,11 +238,21 @@ public class ExperimentsView extends ViewPart {
 	}
 
 	private void doGetExperiments() {
-		// TODO Auto-generated method stub
-		exViewer.setInput(storage.getExperiments());
+		java.util.Set<Experiment> experiments = storage.getExperiments();
+		exViewer.setInput(experiments);
+		/*for(Experiment e : experiments)
+			exViewer.getList().add(e.toString());*/
 		exViewer.refresh();
 	}
 
+	private void doGetExperiments(String filter) {
+		java.util.Set<Experiment> experiments = storage.getExperiments(filter);
+		exViewer.setInput(experiments);
+		/*for(Experiment e : experiments)
+			exViewer.getList().add(e.toString());*/
+		exViewer.refresh();
+		
+	}
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */

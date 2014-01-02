@@ -17,14 +17,14 @@ import org.eclipse.ui.console.MessageConsoleStream;
 
 public class ExperimentLogger extends Logger {
 
-	private static ExperimentLogger logger;
+	private static ExperimentLogger INSTANCE;
 	
 	public static Logger getInstance(){
-		if(logger == null){
-			logger = new ExperimentLogger("Experiment Logger", null);
+		if(INSTANCE == null){
+			INSTANCE = new ExperimentLogger("Experiment Logger", null);
 		}
 		
-		return logger;
+		return INSTANCE;
 	}
 	
 	protected ExperimentLogger(String name, String resourceBundleName) {

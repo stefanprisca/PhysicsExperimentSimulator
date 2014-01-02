@@ -3,13 +3,12 @@ package ro.stefanprisca.physics.experiments.simulator.computer
 import com.google.common.collect.Lists
 import java.util.logging.Logger
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment
-import ro.stefanprisca.physics.experiments.simulator.core.Function
 import ro.stefanprisca.physics.experiments.simulator.core.Variable
 import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger
-import java.util.concurrent.TimeUnit
+import com.google.common.annotations.VisibleForTesting
 
 class ExperimentComputer {
-	private final static Logger LOGGER = ExperimentLogger.instance;
+	private static Logger LOGGER = ExperimentLogger.instance;
 	
 	private static FunctionComputer fComp = new FunctionComputer();
 	
@@ -94,4 +93,8 @@ class ExperimentComputer {
 	}
 	
 	
+	@VisibleForTesting
+	def public setLogger(Logger logger){
+		LOGGER = logger
+	}
 }

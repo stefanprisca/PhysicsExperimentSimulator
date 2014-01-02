@@ -12,6 +12,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.recommenders.utils.gson.GsonUtil;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
@@ -25,6 +26,11 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 	private Experiment experiment;
 	private IFile remote;
 	
+	public ExperimentFileEditorInput (File json){
+		this.experiment = GsonUtil.deserialize(json, Experiment.class);
+		experiment.setLocation(json);
+		remote = toIFile(json);
+	}
 	
 	public ExperimentFileEditorInput (Experiment expr){
 		this.experiment = expr;
@@ -136,9 +142,6 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 			val = Double.parseDouble(valS);
 		}
 		Variable newVar = new Variable(id, val);
-		if(experiment.getVariables().contains(newVar)){
-			throw new IllegalArgumentException("Variable allready exists!");
-		}
 		List<Variable> vars = experiment.getVariables();
 		int index = vars.indexOf(old);
 		vars.set(index, newVar);

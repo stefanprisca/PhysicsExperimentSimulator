@@ -23,7 +23,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		configurer.setShowCoolBar(true);
 		configurer.setShowPerspectiveBar(true);
 		configurer.setShowStatusLine(true);
-		//configurer.setShowFastViewBars(true);
+		configurer.setShowMenuBar(true);
 		
 		configurer.setTitle("Physics Experiment Simulator");
 	}
