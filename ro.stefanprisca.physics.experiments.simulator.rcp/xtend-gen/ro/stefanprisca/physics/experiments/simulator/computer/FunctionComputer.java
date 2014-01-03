@@ -57,8 +57,19 @@ public class FunctionComputer implements IComputer {
       int _indexOf_1 = _get_2.indexOf("}");
       String vari = _get.substring(_plus, _indexOf_1);
       Variable result = this.getVariable(vari, arguments);
+      double _xifexpression = (double) 0;
       String _get_3 = assignment[1];
-      double resultValue = this.compute(_get_3, arguments);
+      boolean _matches = _get_3.matches(IComputer.OPERAND_PATTERN);
+      if (_matches) {
+        String _get_4 = assignment[1];
+        double _computeOperand = this.computeOperand(_get_4, arguments);
+        _xifexpression = _computeOperand;
+      } else {
+        String _get_5 = assignment[1];
+        double _compute = this.compute(_get_5, arguments);
+        _xifexpression = _compute;
+      }
+      double resultValue = _xifexpression;
       result.setValue(resultValue);
       return result.getValue();
     } else {
@@ -234,10 +245,23 @@ public class FunctionComputer implements IComputer {
   }
   
   private double getVariableValue(final String id, final Object... variables) {
+    boolean _equals = id.equals("PI");
+    if (_equals) {
+      return Math.PI;
+    } else {
+      boolean _equals_1 = id.equals("E");
+      if (_equals_1) {
+        return Math.E;
+      }
+    }
+    boolean _equals_2 = id.equals("G");
+    if (_equals_2) {
+      return IComputer.G;
+    }
     for (final Object variable : variables) {
       String _id = ((Variable) variable).getId();
-      boolean _equals = _id.equals(id);
-      if (_equals) {
+      boolean _equals_3 = _id.equals(id);
+      if (_equals_3) {
         return ((Variable) variable).getValue();
       }
     }

@@ -18,7 +18,7 @@ public class FunctionMathMetodTest {
 	public void init(){
 		Variable a=new Variable("z",50.0);
 		Variable b=new Variable("b",3.0);
-		Variable as = new Variable("as", 20.0);
+		Variable as = new Variable("as1", 20.0);
 		Variable rez = new Variable("rez", 20.0);
 		vars = new ArrayList<Variable>();
 		vars.add(a);
@@ -40,7 +40,24 @@ public class FunctionMathMetodTest {
 	public void testpow() throws Exception {
 		
 		String f = new String("pow({z}, {b})");
-
+		System.out.println(fCp.computeFunction(f, vars));
+	}
+	@Test
+	public void testPIEG() throws Exception {
+		
+		String f = new String("{z} = {PI}");
+		System.out.println(fCp.computeFunction(f, vars));
+		
+		f=new String("{z} + {E}");
+		System.out.println(fCp.computeFunction(f, vars));
+		
+		f=new String("{G} + {E}");
+		System.out.println(fCp.computeFunction(f, vars));
+	}
+	@Test
+	public void testNumVar() throws Exception {
+		
+		String f = new String("pow({as1}, {b})");
 		System.out.println(fCp.computeFunction(f, vars));
 	}
 }

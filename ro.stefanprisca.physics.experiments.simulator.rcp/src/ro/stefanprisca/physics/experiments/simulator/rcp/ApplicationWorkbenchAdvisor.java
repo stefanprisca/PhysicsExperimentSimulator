@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Copyright 2014 Stefan Prisca.
+ ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.rcp;
 
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;

@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Copyright 2014 Stefan Prisca.
+ ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.rcp.wizards;
 
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -24,8 +27,8 @@ public class NewExperimentWizardPage extends WizardPage {
 
 	private Text fileText;
 
-	//private ISelection selection;
-	
+	// private ISelection selection;
+
 	/**
 	 * Constructor for SampleNewWizardPage.
 	 * 
@@ -35,7 +38,7 @@ public class NewExperimentWizardPage extends WizardPage {
 		super("wizardPage");
 		setTitle("New Experiment File");
 		setDescription("This wizard creates a new experiment file with *.json extension.");
-		//this.selection = selection;
+		// this.selection = selection;
 	}
 
 	/**
@@ -47,17 +50,19 @@ public class NewExperimentWizardPage extends WizardPage {
 		container.setLayout(layout);
 		layout.numColumns = 3;
 		layout.verticalSpacing = 9;
-		
+
 		Label label = new Label(container, SWT.NULL);
 
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, false, 2, 1);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true,
+				false, 2, 1);
 		label.setText("&Container:");
 
 		containerText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		
+
 		containerText.setLayoutData(gd);
 		containerText.setEditable(false);
-		containerText.setToolTipText("Changes to the container folder are made from the preference page");
+		containerText
+				.setToolTipText("Changes to the container folder are made from the preference page");
 
 		label = new Label(container, SWT.NULL);
 		label.setText("&File name:");
@@ -80,21 +85,16 @@ public class NewExperimentWizardPage extends WizardPage {
 	 */
 
 	private void initialize() {
-		/*if (selection != null && selection.isEmpty() == false
-				&& selection instanceof IStructuredSelection) {
-			IStructuredSelection ssel = (IStructuredSelection) selection;
-			if (ssel.size() > 1)
-				return;
-			Object obj = ssel.getFirstElement();
-			if (obj instanceof IResource) {
-				IContainer container;
-				if (obj instanceof IContainer)
-					container = (IContainer) obj;
-				else
-					container = ((IResource) obj).getParent();
-				
-			}
-		}*/
+		/*
+		 * if (selection != null && selection.isEmpty() == false && selection
+		 * instanceof IStructuredSelection) { IStructuredSelection ssel =
+		 * (IStructuredSelection) selection; if (ssel.size() > 1) return; Object
+		 * obj = ssel.getFirstElement(); if (obj instanceof IResource) {
+		 * IContainer container; if (obj instanceof IContainer) container =
+		 * (IContainer) obj; else container = ((IResource) obj).getParent();
+		 * 
+		 * } }
+		 */
 		IPreferenceStore pStore = Activator.getDefault().getPreferenceStore();
 		containerText.setText(pStore.getString(PreferenceConstants.P_PATH));
 		fileText.setText("new_expr.json");

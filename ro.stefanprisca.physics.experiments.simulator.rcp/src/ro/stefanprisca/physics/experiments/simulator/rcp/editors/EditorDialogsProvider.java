@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Copyright 2014 Stefan Prisca.
+ ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.rcp.editors;
 
 import java.util.regex.Matcher;
@@ -25,9 +28,6 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-
-
-
 import ro.stefanprisca.physics.experiments.simulator.computer.DelegatingMathComputer;
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer;
 import ro.stefanprisca.physics.experiments.simulator.core.Variable;
@@ -37,8 +37,8 @@ public class EditorDialogsProvider {
 
 		private ElementListSelectionDialog formulaSel;
 
-		public ExperimentInputDialogEditor(Shell parentShell, String dialogTitle,
-				String dialogMessage, String initialValue,
+		public ExperimentInputDialogEditor(Shell parentShell,
+				String dialogTitle, String dialogMessage, String initialValue,
 				IInputValidator validator) {
 			super(parentShell, dialogTitle, dialogMessage, initialValue,
 					validator);
@@ -62,32 +62,31 @@ public class EditorDialogsProvider {
 					formulaSel.setHelpAvailable(true);
 					String formula = parseFormula(formulaSel.getFirstResult());
 					insertOnText(formula, getText());
-				
+
 				}
 
-				
 			});
 
 			return contents;
 		}
+
 		private void insertOnText(String formula, Text text) {
 			int index = text.getCaretPosition();
 			String contents = text.getText();
-			String firstPart=contents.substring(0, index);
+			String firstPart = contents.substring(0, index);
 			String secondPart = contents.substring(index);
 			text.setText(firstPart + " " + formula + " " + secondPart);
-			
+
 		}
 
-		
 	}
 
 	private IEditorPart editor;
 	private ExperimentFileEditorInput input;
 	private FormPage parent;
-	
+
 	public EditorDialogsProvider(FormPage parent) {
-		this.parent=parent;
+		this.parent = parent;
 		editor = parent.getEditor();
 		input = (ExperimentFileEditorInput) editor.getEditorInput();
 
@@ -95,8 +94,9 @@ public class EditorDialogsProvider {
 
 	public InputDialog createInputDialogEqAddEditor(Composite body,
 			final List eqList) {
-		return new ExperimentInputDialogEditor(body.getShell(), "Add an equation",
-				"Add a new equation to the experiment", "", null) {
+		return new ExperimentInputDialogEditor(body.getShell(),
+				"Add an equation", "Add a new equation to the experiment", "",
+				null) {
 			@Override
 			protected void okPressed() {
 				ensureExistingVariables(getText().getText());
@@ -111,20 +111,19 @@ public class EditorDialogsProvider {
 
 	public InputDialog createInputDialogEqEditEditor(Composite body,
 			String initialValue, final List eqList) {
-		return new ExperimentInputDialogEditor(body.getShell(), "Edit Equation",
-				"Edit the selected equation", initialValue, null) {
+		return new ExperimentInputDialogEditor(body.getShell(),
+				"Edit Equation", "Edit the selected equation", initialValue,
+				null) {
 			@Override
 			protected void okPressed() {
-				
+
 				ensureExistingVariables(getText().getText());
-				
+
 				eqList.setItem(eqList.getSelectionIndex(), getValue());
 				input.setEquations(eqList.getItems());
 				((ExperimentEditor) editor).setDirty(true);
 				super.okPressed();
 			}
-
-			
 
 		};
 	}
@@ -229,28 +228,33 @@ public class EditorDialogsProvider {
 	}
 
 	private String parseFormula(Object firstResult) {
-		String result = (String)firstResult;
-		String parameters = result.substring(result.indexOf('(')+1, result.indexOf(')'));
-		for(String s : parameters.split(",")){
+		String result = (String) firstResult;
+		String parameters = result.substring(result.indexOf('(') + 1,
+				result.indexOf(')'));
+		for (String s : parameters.split(",")) {
 			result = result.replaceFirst(s, "{}");
 		}
 		return result;
 	}
-	
+
 	private void ensureExistingVariables(String equation) {
 		// TODO Auto-generated method stub
-		Matcher m = Pattern.compile(IComputer.VARIABLE_PATTERN).matcher(equation);
+		Matcher m = Pattern.compile(IComputer.VARIABLE_PATTERN).matcher(
+				equation);
 		Variable v = new Variable("", 0);
 		String group;
-		while(m.find()){
+		while (m.find()) {
 			group = m.group();
-			v.setId(group.substring(group.indexOf('{')+1, group.indexOf('}')));
-			if(!input.getVariables().contains(v)){
-				if(MessageDialog.openQuestion(parent.getPartControl().getShell(), "Non Existing Variable", 
-												"The variable {"+ v.getId()+ "} does not exist. Would you like to add it?")){
+			v.setId(group.substring(group.indexOf('{') + 1, group.indexOf('}')));
+			if (!IComputer.SPECIAL_VARS.contains(v.getId()) && !input.getVariables().contains(v)) {
+				if (MessageDialog.openQuestion(parent.getPartControl()
+						.getShell(), "Non Existing Variable", "The variable {"
+						+ v.getId()
+						+ "} does not exist. Would you like to add it?")) {
 					input.addVariable(v.getId(), "0");
 					((ExperimentEditor) editor).setDirty(true);
-				};
+				}
+				;
 			}
 		}
 	}

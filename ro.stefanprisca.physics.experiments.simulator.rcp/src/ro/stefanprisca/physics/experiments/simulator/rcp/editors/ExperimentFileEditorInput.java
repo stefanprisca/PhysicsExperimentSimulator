@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Copyright 2014 Stefan Prisca.
+ ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.rcp.editors;
 
 import java.io.File;
@@ -24,28 +27,27 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 
 	private Experiment experiment;
 	private IFile remote;
-	
-	public ExperimentFileEditorInput (File json){
+
+	public ExperimentFileEditorInput(File json) {
 		this.experiment = GsonUtil.deserialize(json, Experiment.class);
 		experiment.setLocation(json);
 		remote = toIFile(json);
 	}
-	
-	public ExperimentFileEditorInput (Experiment expr){
+
+	public ExperimentFileEditorInput(Experiment expr) {
 		this.experiment = expr;
 		remote = toIFile(expr.getLocation());
 	}
-	
+
 	private static IFile toIFile(File json) {
-        IWorkspaceRoot root2 = ResourcesPlugin.getWorkspace().getRoot();
-        IPath root = root2.getLocation();
-        IPath location = Path.fromOSString(json.getAbsolutePath());
-        IPath makeRelativeTo = location.makeRelativeTo(root);
-        IFile file = root2.getFile(makeRelativeTo);
-        return file;
-    }
-	
-	
+		IWorkspaceRoot root2 = ResourcesPlugin.getWorkspace().getRoot();
+		IPath root = root2.getLocation();
+		IPath location = Path.fromOSString(json.getAbsolutePath());
+		IPath makeRelativeTo = location.makeRelativeTo(root);
+		IFile file = root2.getFile(makeRelativeTo);
+		return file;
+	}
+
 	@Override
 	public IStorage getStorage() throws CoreException {
 		return remote;
@@ -66,14 +68,15 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 	public String getName() {
 		return experiment.getName();
 	}
-	
-	public String getDescription(){
+
+	public String getDescription() {
 		return experiment.getDescription();
 	}
 
-	public List<String> getEquations(){
+	public List<String> getEquations() {
 		return experiment.getFunctions();
 	}
+
 	@Override
 	public IPersistableElement getPersistable() {
 		return null;
@@ -119,43 +122,45 @@ public class ExperimentFileEditorInput implements IFileEditorInput {
 		return experiment.getVariables();
 	}
 
-	public void addVariable(String id, String valS) throws NumberFormatException, IllegalArgumentException{
+	public void addVariable(String id, String valS)
+			throws NumberFormatException, IllegalArgumentException {
 		// TODO Auto-generated method stub
 		double val = 0;
-		
-		if(!valS.isEmpty()){
+
+		if (!valS.isEmpty()) {
 			val = Double.parseDouble(valS);
 		}
 		Variable var = new Variable(id, val);
-		if(experiment.getVariables().contains(var)){
+		if (experiment.getVariables().contains(var)) {
 			throw new IllegalArgumentException("Variable allready exists!");
 		}
 		experiment.getVariables().add(var);
 	}
 
-	public void setVariable(Variable old, String id, String valS) throws NumberFormatException, IllegalArgumentException{
+	public void setVariable(Variable old, String id, String valS)
+			throws NumberFormatException, IllegalArgumentException {
 		// TODO Auto-generated method stub
 		double val = 0;
-		
-		if(!valS.isEmpty()){
+
+		if (!valS.isEmpty()) {
 			val = Double.parseDouble(valS);
 		}
 		Variable newVar = new Variable(id, val);
 		List<Variable> vars = experiment.getVariables();
 		int index = vars.indexOf(old);
 		vars.set(index, newVar);
-		
+
 	}
-	
-	@Override 
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof IFileEditorInput)) {
-            return false;
-        }
-        IFileEditorInput other = (IFileEditorInput) obj;
-        return getFile().equals(other.getFile());
+			return true;
+		}
+		if (!(obj instanceof IFileEditorInput)) {
+			return false;
+		}
+		IFileEditorInput other = (IFileEditorInput) obj;
+		return getFile().equals(other.getFile());
 	}
 }

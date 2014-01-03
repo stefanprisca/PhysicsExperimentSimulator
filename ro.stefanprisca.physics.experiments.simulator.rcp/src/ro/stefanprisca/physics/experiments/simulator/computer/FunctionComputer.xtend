@@ -26,7 +26,11 @@ class FunctionComputer implements IComputer {
 			var assignment = equationFinal.split(MATHEQUALITY_PATTERN)
 			var vari = assignment.get(0).substring(assignment.get(0).indexOf("{") + 1, assignment.get(0).indexOf("}"))
 			var result = vari.getVariable(arguments)
-			var resultValue = assignment.get(1).compute(arguments)
+			var resultValue = if(assignment.get(1).matches(IComputer.OPERAND_PATTERN))
+									assignment.get(1).computeOperand(arguments)
+								else
+									assignment.get(1).compute(arguments)
+									
 			result.setValue(resultValue)
 			return result.value
 		} else
@@ -137,6 +141,13 @@ class FunctionComputer implements IComputer {
 
 	def private getVariableValue(String id, Object... variables) {
 
+		if(id.equals("PI")){
+			return Math.PI
+		}else if(id.equals("E")){
+			return Math.E
+		}if(id.equals("G")){
+			return IComputer.G
+		}
 		for (variable : variables) {
 
 			if((variable as Variable).id.equals(id)) return (variable as Variable).value

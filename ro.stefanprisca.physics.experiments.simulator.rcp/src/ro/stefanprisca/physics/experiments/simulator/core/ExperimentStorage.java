@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Copyright 2014 Stefan Prisca.
+ ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.core;
 
 import java.io.File;
@@ -41,14 +44,13 @@ public class ExperimentStorage {
 
 	public Set<Experiment> getExperiments() {
 		TreeSet<Experiment> result = new TreeSet<Experiment>();
-		
-		if(location.getAbsolutePath() != Activator.getDefault().getPreferenceStore()
-				.getString(PreferenceConstants.P_PATH)){
-			this.location = new File(Activator.getDefault().getPreferenceStore()
-					.getString(PreferenceConstants.P_PATH));
+
+		if (location.getAbsolutePath() != Activator.getDefault()
+				.getPreferenceStore().getString(PreferenceConstants.P_PATH)) {
+			this.location = new File(Activator.getDefault()
+					.getPreferenceStore().getString(PreferenceConstants.P_PATH));
 		}
-		
-		
+
 		if (location.exists()) {
 
 			for (File jsonFile : location.listFiles()) {
@@ -69,7 +71,8 @@ public class ExperimentStorage {
 
 			for (File jsonFile : location.listFiles()) {
 				exp = GsonUtil.deserialize(jsonFile, Experiment.class);
-				if (exp.getName().contains(filter) || exp.getDescription().contains(filter)) {
+				if (exp.getName().contains(filter)
+						|| exp.getDescription().contains(filter)) {
 					exp.setLocation(jsonFile);
 					result.add(exp);
 				}

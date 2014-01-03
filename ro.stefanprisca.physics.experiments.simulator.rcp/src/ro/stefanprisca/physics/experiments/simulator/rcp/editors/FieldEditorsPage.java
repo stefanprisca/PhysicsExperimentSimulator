@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Copyright 2014 Stefan Prisca.
+ ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.rcp.editors;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -34,7 +37,7 @@ import ro.stefanprisca.physics.experiments.simulator.core.Variable;
 public class FieldEditorsPage extends FormPage {
 
 	private EditorDialogsProvider edp;
-	
+
 	private ExperimentFileEditorInput input;
 
 	private ListViewer equationsListViewer;
@@ -44,11 +47,12 @@ public class FieldEditorsPage extends FormPage {
 	private Table varTable;
 
 	private FormToolkit toolkit;
+
 	public FieldEditorsPage(FormEditor editor) {
 		// TODO Auto-generated constructor stub
 		super(editor, "r.s.p.e.s.e.fep", "Field Editors");
 		input = (ExperimentFileEditorInput) editor.getEditorInput();
-		edp=new EditorDialogsProvider(this);
+		edp = new EditorDialogsProvider(this);
 	}
 
 	@Override
@@ -84,7 +88,7 @@ public class FieldEditorsPage extends FormPage {
 		exprNameTxt.setLayoutData(txtData);
 
 		createEquationSection(body, toolkit);
-		
+
 		toolkit.createLabel(body, "Experiment Description: ", SWT.None);
 		final Text descTxt = toolkit.createText(body,
 				editorInput.getDescription(), SWT.MULTI | SWT.V_SCROLL
@@ -106,11 +110,11 @@ public class FieldEditorsPage extends FormPage {
 		});
 
 		createVariableSection(body);
-		
+
 		form.pack();
 	}
-	
-	private void createEquationSection(final Composite body, FormToolkit toolkit){
+
+	private void createEquationSection(final Composite body, FormToolkit toolkit) {
 		final Section equationsSection = toolkit.createSection(body,
 				ExpandableComposite.TWISTIE | ExpandableComposite.TITLE_BAR);
 		equationsSection.setText("Experiment Equations");
@@ -149,7 +153,8 @@ public class FieldEditorsPage extends FormPage {
 		editEq.setEnabled(false);
 		editEq.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				edp.createInputDialogEqEditEditor(body, eqList.getSelection()[0], eqList).open();
+				edp.createInputDialogEqEditEditor(body,
+						eqList.getSelection()[0], eqList).open();
 			}
 
 		});
@@ -221,7 +226,7 @@ public class FieldEditorsPage extends FormPage {
 					moveEqUp.setEnabled(true);
 				else
 					moveEqUp.setEnabled(false);
-				if (eqList.getSelectionIndex() < eqList.getItemCount()-1)
+				if (eqList.getSelectionIndex() < eqList.getItemCount() - 1)
 					moveEqDw.setEnabled(true);
 				else
 					moveEqDw.setEnabled(false);
@@ -243,13 +248,13 @@ public class FieldEditorsPage extends FormPage {
 					removeEq.setEnabled(false);
 					moveEqUp.setEnabled(false);
 					moveEqDw.setEnabled(false);
-				} 
+				}
 			}
 		});
 
 	}
-	
-	private void createVariableSection(final Composite body){
+
+	private void createVariableSection(final Composite body) {
 		Section varSection = toolkit.createSection(body,
 				ExpandableComposite.TWISTIE | ExpandableComposite.TITLE_BAR);
 		varSection.setText("Experiment Variables");
@@ -264,48 +269,50 @@ public class FieldEditorsPage extends FormPage {
 		varSection.setClient(varCont);
 
 		varCont.setLayout(new GridLayout(2, true));
-		variableTableViewer = new TableViewer(varCont,SWT.MULTI | SWT.H_SCROLL
-			      | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+		variableTableViewer = new TableViewer(varCont, SWT.MULTI | SWT.H_SCROLL
+				| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		createColumns(varCont, variableTableViewer);
-		
+
 		varTable = variableTableViewer.getTable();
 		varTable.setHeaderVisible(true);
-		
+
 		varTable.setLinesVisible(true);
-		
-		varTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
-		
+
+		varTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
+				3));
+
 		variableTableViewer.setContentProvider(new ArrayContentProvider());
 		variableTableViewer.setInput(input.getVariables());
-		
-		
-		GridData varButtonData = new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1);
-		
+
+		GridData varButtonData = new GridData(SWT.FILL, SWT.CENTER, true, true,
+				1, 1);
+
 		Button addVar = toolkit.createButton(varCont, "Add New", SWT.PUSH);
 		addVar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				 edp.createNewVariableEditor(body.getShell(), variableTableViewer, toolkit).open();
-				 
+				edp.createNewVariableEditor(body.getShell(),
+						variableTableViewer, toolkit).open();
+
 			}
 
 		});
 		addVar.setLayoutData(varButtonData);
-		
-		
+
 		final Button editVar = toolkit.createButton(varCont, "Edit", SWT.PUSH);
 		editVar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				Variable var = (Variable) varTable.getSelection()[0].getData();
-				edp.createNewVariableEditor(body.getShell(), var, variableTableViewer, toolkit).open();
+				edp.createNewVariableEditor(body.getShell(), var,
+						variableTableViewer, toolkit).open();
 				editVar.setEnabled(false);
 			}
 
 		});
 		editVar.setLayoutData(varButtonData);
 		editVar.setEnabled(false);
-		
-		
-		final Button removeVar = toolkit.createButton(varCont, "Remove", SWT.PUSH);
+
+		final Button removeVar = toolkit.createButton(varCont, "Remove",
+				SWT.PUSH);
 		removeVar.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				Variable var = (Variable) varTable.getSelection()[0].getData();
@@ -319,62 +326,63 @@ public class FieldEditorsPage extends FormPage {
 		});
 		removeVar.setLayoutData(varButtonData);
 		removeVar.setEnabled(false);
-		
+
 		varTable.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
+			public void widgetSelected(SelectionEvent e) {
 				editVar.setEnabled(true);
 				removeVar.setEnabled(true);
 			}
 		});
-		
-		varSection.addExpansionListener(new ExpansionAdapter(){
+
+		varSection.addExpansionListener(new ExpansionAdapter() {
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
 				// TODO Auto-generated method stub
 				if (!e.getState()) {
 					editVar.setEnabled(false);
 					removeVar.setEnabled(false);
-				} else{
+				} else {
 					variableTableViewer.refresh();
 				}
 			}
 		});
 	}
-	
+
 	private void createColumns(final Composite parent, final TableViewer viewer) {
-	    String[] titles = { "ID", "Value"};
-	    int[] bounds = { 100, 100, 100, 100 };
+		String[] titles = { "ID", "Value" };
+		int[] bounds = { 100, 100, 100, 100 };
 
-	    // first column is for the first name
-	    TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
-	    col.setLabelProvider(new ColumnLabelProvider() {
-	      @Override
-	      public String getText(Object element) {
-	        Variable v = (Variable) element;
-	        return v.getId();
-	      }
-	    });
+		// first column is for the first name
+		TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
+		col.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				Variable v = (Variable) element;
+				return v.getId();
+			}
+		});
 
-	    // second column is for the last name
-	    col = createTableViewerColumn(titles[1], bounds[1], 1);
-	    col.setLabelProvider(new ColumnLabelProvider() {
-	      @Override
-	      public String getText(Object element) {
-	        Variable v = (Variable) element;
-	        return String.valueOf(v.getValue());
-	      }
-	    });
+		// second column is for the last name
+		col = createTableViewerColumn(titles[1], bounds[1], 1);
+		col.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				Variable v = (Variable) element;
+				return String.valueOf(v.getValue());
+			}
+		});
 	}
 
-	private TableViewerColumn createTableViewerColumn(String title, int bound, final int colNumber) {
-	    final TableViewerColumn viewerColumn = new TableViewerColumn(variableTableViewer, SWT.NONE);
-	    final TableColumn column = viewerColumn.getColumn();
-	    column.setText(title);
-	    column.setWidth(bound);
-	    column.setResizable(true);
-	    column.setMoveable(true);
-	    return viewerColumn;
-	  }
-
+	private TableViewerColumn createTableViewerColumn(String title, int bound,
+			final int colNumber) {
+		final TableViewerColumn viewerColumn = new TableViewerColumn(
+				variableTableViewer, SWT.NONE);
+		final TableColumn column = viewerColumn.getColumn();
+		column.setText(title);
+		column.setWidth(bound);
+		column.setResizable(true);
+		column.setMoveable(true);
+		return viewerColumn;
+	}
 
 }

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Samples" link_to="toc.xml#samples"> 
-	<topic label="Main Topic"  href="html/samples/maintopic.html"> 
-		<topic label="Sub Topic" href="html/samples/subtopic.html" /> 
+<toc label="Samples" link_to="toc.xml#samples" topic="html/samples/Examples.html"> 
+	<topic label="Math Examples"  href="html/samples/Mathematical.html"> 
 	</topic>
-	<topic label="Main Topic 2">
-		<topic label="Sub Topic 2" href="html/samples/subtopic2.html" /> 
+	<topic href="html/samples/Physical.html" label="Physical Examples">
 	</topic> 
 </toc>

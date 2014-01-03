@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Copyright 2014 Stefan Prisca.
+ ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.rcp;
 
 import org.eclipse.jface.action.IAction;
@@ -30,8 +33,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		register(help);
 		IAction introAction = ActionFactory.INTRO.create(window);
 		register(introAction);
-		
+
 		super.makeActions(window);
 	}
-	
+
 }
