@@ -31,6 +31,7 @@ public class ExperimentEditor extends FormEditor implements IResourceChangeListe
         if(! (editorInput instanceof ExperimentFileEditorInput)){
         	throw new PartInitException("Failed to create editor");
         }
+        this.setPartName(editorInput.getName());
         super.init(site, editorInput);
     }
 	

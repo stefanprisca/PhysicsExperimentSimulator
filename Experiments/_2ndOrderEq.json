@@ -1,0 +1,37 @@
+{
+  "uuid": "9c2163a5-d8e8-45f8-888c-2db6e604beee",
+  "name": "_2ndOrderEq",
+  "description": "",
+  "functions": [
+    "{delta} \u003d  pow({b},2.0) - 4.0*{a}*{c}",
+    "{x} \u003d ({b} -  sqrt({delta}) ) / 2.0*{a}",
+    "{x} \u003d ({b} +  sqrt({delta}) ) / 2.0*{a}"
+  ],
+  "variables": [
+    {
+      "id": "delta",
+      "val": 0.0
+    },
+    {
+      "id": "b",
+      "val": 0.0
+    },
+    {
+      "id": "a",
+      "val": 0.0
+    },
+    {
+      "id": "c",
+      "val": 0.0
+    },
+    {
+      "id": "d",
+      "val": 0.0
+    },
+    {
+      "id": "x",
+      "val": 0.0
+    }
+  ],
+  "location": "C:\\Users\\Stefan\\SkyDrive\\Documents\\School\\SE\\Experiments\\_2ndOrderEq.json"
+}

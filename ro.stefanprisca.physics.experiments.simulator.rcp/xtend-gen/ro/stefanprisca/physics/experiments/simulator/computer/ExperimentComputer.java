@@ -32,62 +32,60 @@ public class ExperimentComputer {
     String _plus_2 = (_plus_1 + 
       "\n********************************************\n");
     ExperimentComputer.LOGGER.fine(_plus_2);
+    ArrayList<Variable> args = Lists.<Variable>newArrayList();
+    List<Variable> _variables = e.getVariables();
+    for (final Variable vari : _variables) {
+      String _id = vari.getId();
+      double _value = vari.getValue();
+      Variable _variable = new Variable(_id, _value);
+      args.add(_variable);
+    }
     List<String> _functions = e.getFunctions();
     for (final String f : _functions) {
-      {
-        ArrayList<Variable> args = Lists.<Variable>newArrayList();
-        List<Variable> _variables = e.getVariables();
-        for (final Variable vari : _variables) {
-          String _id = vari.getId();
-          double _value = vari.getValue();
-          Variable _variable = new Variable(_id, _value);
-          args.add(_variable);
-        }
-        try {
-          double _computeFunction = ExperimentComputer.fComp.computeFunction(f, args);
-          rez = _computeFunction;
-          ExperimentComputer.LOGGER.info(((("The result of equation " + f) + " is:") + Double.valueOf(rez)));
-        } catch (final Throwable _t) {
-          if (_t instanceof IllegalArgumentException) {
-            final IllegalArgumentException ilae = (IllegalArgumentException)_t;
-            String _message = ilae.getMessage();
-            String _plus_3 = (((("There were argument exceptions in equation " + f) + " !\n") + 
-              "Please check for divisions by zero, invalid math operations, or undeclared variables! \n") + _message);
-            ExperimentComputer.LOGGER.severe(_plus_3);
-            return;
-          } else if (_t instanceof NumberFormatException) {
-            final NumberFormatException nfe = (NumberFormatException)_t;
-            String _message_1 = nfe.getMessage();
-            String _plus_4 = (((("There were number format issues in equation " + f) + " !\n") + 
-              "Make sure all numbers are in < x.x > decimal format!(e.g. 10.0).\n") + _message_1);
-            ExperimentComputer.LOGGER.severe(_plus_4);
-            return;
-          } else if (_t instanceof Exception) {
-            final Exception ex = (Exception)_t;
-            String _message_2 = ex.getMessage();
-            String _plus_5 = (((("Something went wrong in equation " + f) + " !\n") + 
-              "Please check the following message and the console output! \n") + _message_2);
-            ExperimentComputer.LOGGER.severe(_plus_5);
-            return;
-          } else {
-            throw Exceptions.sneakyThrow(_t);
-          }
+      try {
+        double _computeFunction = ExperimentComputer.fComp.computeFunction(f, args);
+        rez = _computeFunction;
+        ExperimentComputer.LOGGER.info(((("The result of equation " + f) + " is:") + Double.valueOf(rez)));
+      } catch (final Throwable _t) {
+        if (_t instanceof IllegalArgumentException) {
+          final IllegalArgumentException ilae = (IllegalArgumentException)_t;
+          String _message = ilae.getMessage();
+          String _plus_3 = (((("There were argument exceptions in equation " + f) + " !\n") + 
+            "Please check for divisions by zero, invalid math operations, or undeclared variables! \n") + _message);
+          ExperimentComputer.LOGGER.severe(_plus_3);
+          return;
+        } else if (_t instanceof NumberFormatException) {
+          final NumberFormatException nfe = (NumberFormatException)_t;
+          String _message_1 = nfe.getMessage();
+          String _plus_4 = (((("There were number format issues in equation " + f) + " !\n") + 
+            "Make sure all numbers are in < x.x > decimal format!(e.g. 10.0).\n") + _message_1);
+          ExperimentComputer.LOGGER.severe(_plus_4);
+          return;
+        } else if (_t instanceof Exception) {
+          final Exception ex = (Exception)_t;
+          String _message_2 = ex.getMessage();
+          String _plus_5 = (((("Something went wrong in equation " + f) + " !\n") + 
+            "Please check the following message and the console output! \n") + _message_2);
+          ExperimentComputer.LOGGER.severe(_plus_5);
+          return;
+        } else {
+          throw Exceptions.sneakyThrow(_t);
         }
       }
     }
     String _name_1 = e.getName();
-    String _plus_3 = ("The final result of experiment < " + _name_1);
-    String _plus_4 = (_plus_3 + " > is: ");
-    String _plus_5 = (_plus_4 + Double.valueOf(rez));
-    ExperimentComputer.LOGGER.info(_plus_5);
-    String _name_2 = e.getName();
-    String _plus_6 = (("\n********************************************" + 
-      "\n\tExperiment < ") + _name_2);
-    String _plus_7 = (_plus_6 + " > concluded with result ");
+    String _plus_6 = ("The final result of experiment < " + _name_1);
+    String _plus_7 = (_plus_6 + " > is: ");
     String _plus_8 = (_plus_7 + Double.valueOf(rez));
-    String _plus_9 = (_plus_8 + 
+    ExperimentComputer.LOGGER.info(_plus_8);
+    String _name_2 = e.getName();
+    String _plus_9 = (("\n********************************************" + 
+      "\n\tExperiment < ") + _name_2);
+    String _plus_10 = (_plus_9 + " > concluded with result ");
+    String _plus_11 = (_plus_10 + Double.valueOf(rez));
+    String _plus_12 = (_plus_11 + 
       "\n********************************************\n");
-    ExperimentComputer.LOGGER.fine(_plus_9);
+    ExperimentComputer.LOGGER.fine(_plus_12);
   }
   
   public static void compute(final Experiment e, final String period) {

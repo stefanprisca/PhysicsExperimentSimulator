@@ -1,0 +1,26 @@
+{
+  "uuid": "1bc55289-6932-44c4-8684-713759be530e",
+  "name": "test2 ",
+  "description": "the second test expr\r\nThis is the second experiment that\r\nwas made with the purpoase of testing!\r\nI hope it works fine.",
+  "functions": [
+    "{x} \u003d {x} + 1.0",
+    "{z} \u003d {x} + {y}",
+    "{x} \u003d {x} + max(10.1, 100.100)",
+    "{x} \u003d {x} + max(10.1, 100.05)"
+  ],
+  "variables": [
+    {
+      "id": "x",
+      "val": 303.3
+    },
+    {
+      "id": "y",
+      "val": 0.0
+    },
+    {
+      "id": "z",
+      "val": 0.05555
+    }
+  ],
+  "location": "W:\\Workspace\\School\\runtime-ro.stefanprisca.physics.experiments.simulator.rcp.application\\Experiments\\expr2.json"
+}

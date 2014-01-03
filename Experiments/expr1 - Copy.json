@@ -1,0 +1,30 @@
+{
+  "uuid": "1bc55289-6932-44c4-8684-713759be530e",
+  "name": "test1",
+  "description": "the first test expr  is this working? Muhahah\r\nThis is the new file! THis was the first experiment created\r\nHa, it is really cool!\r\n\r\nTHis was just a simple test\r\nShould this work, i\u0027ll get a 10 for the project!",
+  "functions": [
+    "{z} \u003d {x} / ({y} + pow({x}, 10.0))",
+    "{x} \u003d sin(100.0)",
+    "{y} \u003d (cos(10.45) + 100.0) / pow({x}, 2.0)",
+    "{k} \u003d {k} - 1.0"
+  ],
+  "variables": [
+    {
+      "id": "x",
+      "val": -0.50636564111
+    },
+    {
+      "id": "y",
+      "val": 387.982449162882
+    },
+    {
+      "id": "z",
+      "val": -0.001305121393
+    },
+    {
+      "id": "k",
+      "val": 10.0
+    }
+  ],
+  "location": "W:\\Workspace\\School\\runtime-ro.stefanprisca.physics.experiments.simulator.rcp.application\\Experiments\\expr1 - Copy.json"
+}

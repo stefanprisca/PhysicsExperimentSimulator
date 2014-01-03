@@ -1,0 +1,16 @@
+{
+  "uuid": "b48417d3-1513-446d-bc4f-01196dd1c68a",
+  "name": "MyNewExperiment",
+  "description": "This is the first experiment created from zero.\r\nI hope it will work fine!:D",
+  "functions": [
+    "{x}\u003drandom()",
+    "{x} \u003d {x} + 1.0"
+  ],
+  "variables": [
+    {
+      "id": "x",
+      "val": 0.0
+    }
+  ],
+  "location": "W:\\Workspace\\School\\runtime-ro.stefanprisca.physics.experiments.simulator.rcp.application\\Experiments\\MyNewExperiment.json"
+}

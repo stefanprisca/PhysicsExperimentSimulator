@@ -30,7 +30,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
-import static ro.stefanprisca.physics.experiments.simulator.computer.ExperimentComputer.compute;
+import ro.stefanprisca.physics.experiments.simulator.computer.ExperimentComputer;
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
 import ro.stefanprisca.physics.experiments.simulator.core.ExperimentStorage;
 import ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentEditor;
@@ -168,6 +168,14 @@ public class ExperimentsView extends ViewPart {
 				// TODO Auto-generated method stub
 				if(selection.getValue() != null){
 					doSetUpDetails();
+					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					ExperimentFileEditorInput input = new ExperimentFileEditorInput((Experiment)selection.getValue());
+					try {
+						page.openEditor(input, ExperimentEditor.getId());
+					} catch (PartInitException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 			
@@ -181,7 +189,7 @@ public class ExperimentsView extends ViewPart {
 			}
 		});
 		
-		contents.setSize(contents.computeSize(550, 600));
+		contents.setSize(contents.computeSize(550, 800));
 	}
 	private void doSetUpDetails() {
 		for(Control c:details.getChildren()){
@@ -212,7 +220,7 @@ public class ExperimentsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e){
 				
-				compute(expr);
+				ExperimentComputer.compute(expr);
 						
 			}
 		});
@@ -228,7 +236,7 @@ public class ExperimentsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e){
 				if(!tPeriod.getText().isEmpty())
-					compute(expr, tPeriod.getText());
+					ExperimentComputer.compute(expr, tPeriod.getText());
 						
 			}
 		});

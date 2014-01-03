@@ -1,7 +1,6 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp.editors;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -16,10 +15,10 @@ import org.eclipse.recommenders.utils.gson.GsonUtil;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
-import com.google.common.collect.Lists;
-
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
 import ro.stefanprisca.physics.experiments.simulator.core.Variable;
+
+import com.google.common.collect.Lists;
 
 public class ExperimentFileEditorInput implements IFileEditorInput {
 

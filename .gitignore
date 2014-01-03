@@ -2,7 +2,8 @@
 *.jar
 *.zip
 *.gz
-
+## no deploy folder
+./Deploy
 ## no derived resources
 *.class
 bin/

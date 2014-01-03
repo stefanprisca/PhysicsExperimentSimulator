@@ -64,6 +64,11 @@
                   label="Help"
                   style="push">
             </command>
+            <command
+                  commandId="org.eclipse.ui.help.quickStartAction"
+                  label="Show Welcome"
+                  style="push">
+            </command>
          </menu>
          <menu
                label="Views">
@@ -79,12 +84,22 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="org.eclipse.ui.ide.workbench"
+            application="ro.stefanprisca.physics.experiments.simulator.rcp.application"
             name="simulator.product">
          <property
                name="appName"
                value="simulator.product">
          </property>
+         <property
+               name="aboutImage"
+               value="icons/einstein.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="Welcome to the Physics Simulator!">
+         </property>
+         <property name="introBrandingImage" value="product:icons/releng_gears.gif"/>
+		 <property name="introTitle" value="Physics Experiments Simulator"/>
       </product>
    </extension>
    <extension
@@ -143,11 +158,23 @@
             file="tocgettingStarted.xml">
       </toc>
       <toc
-            file="tocgettingstarted.xml">
-      </toc>
-      <toc
             file="tocsamples.xml">
       </toc>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            configId="org.eclipse.ui.intro.universalConfig"
+            content="intro/intoduction.xml">
+      </configExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.intro">
+      <introProductBinding
+            introId="org.eclipse.ui.intro.universal"
+            productId="ro.stefanprisca.physics.experiments.simulator.rcp.product">
+            
+      </introProductBinding>
    </extension>
 
 </plugin>

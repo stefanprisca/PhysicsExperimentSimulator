@@ -219,8 +219,12 @@ public class FieldEditorsPage extends FormPage {
 				removeEq.setEnabled(true);
 				if (eqList.getSelectionIndex() != 0)
 					moveEqUp.setEnabled(true);
-				if (eqList.getSelectionIndex() < eqList.getItemCount())
+				else
+					moveEqUp.setEnabled(false);
+				if (eqList.getSelectionIndex() < eqList.getItemCount()-1)
 					moveEqDw.setEnabled(true);
+				else
+					moveEqDw.setEnabled(false);
 			}
 		});
 

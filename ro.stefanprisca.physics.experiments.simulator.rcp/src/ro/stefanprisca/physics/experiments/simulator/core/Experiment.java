@@ -10,6 +10,7 @@ import org.eclipse.recommenders.utils.Uuidable;
 
 import com.google.gson.annotations.SerializedName;
 
+@SuppressWarnings("rawtypes")
 public class Experiment implements Uuidable, Comparable{
 
 	@SerializedName("uuid")

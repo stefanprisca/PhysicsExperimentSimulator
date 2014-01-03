@@ -21,12 +21,13 @@ class ExperimentComputer {
 		LOGGER.fine("\n********************************************"+
 							"\n\tStarted experiment < "+e.name+" >"+
 					"\n********************************************\n");
+		var args = Lists.newArrayList
+		for(vari: e.variables){
+			args.add(new Variable(vari.id, vari.value))
+		}
 		for(String f: e.functions)
 		{
-				var args = Lists.newArrayList
-				for(vari: e.variables){
-					args.add(new Variable(vari.id, vari.value))
-				}
+				
 				try{
 				rez = fComp.computeFunction(f, args)
 				

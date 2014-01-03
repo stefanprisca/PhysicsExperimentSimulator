@@ -1,24 +1,27 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp.wizards;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.UUID;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.recommenders.utils.gson.GsonUtil;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jface.operation.*;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWizard;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.UUID;
-
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.core.runtime.CoreException;
-
-import java.io.*;
-
-import org.eclipse.ui.*;
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
 import ro.stefanprisca.physics.experiments.simulator.core.Variable;
 import ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentEditor;
@@ -39,8 +42,6 @@ import com.google.common.io.Files;
 
 public class NewExperimentWizard extends Wizard implements INewWizard {
 	private NewExperimentWizardPage page;
-	private ISelection selection;
-
 	/**
 	 * Constructor for NewExperimentWizard.
 	 */
@@ -157,6 +158,5 @@ public class NewExperimentWizard extends Wizard implements INewWizard {
 	 * @see IWorkbenchWizard#init(IWorkbench, IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		this.selection = selection;
 	}
 }

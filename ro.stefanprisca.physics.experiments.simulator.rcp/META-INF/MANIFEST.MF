@@ -23,9 +23,11 @@ Require-Bundle: org.eclipse.ui,
  com.google.inject,
  org.eclipse.help.ui;bundle-version="4.0.1",
  org.eclipse.help.webapp;bundle-version="3.6.200",
- org.eclipse.equinox.http.jetty;bundle-version="3.0.100"
+ org.eclipse.equinox.http.jetty;bundle-version="3.0.100",
+ org.eclipse.ui.intro,
+ org.eclipse.ui.intro.universal
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: ro.stefanprisca.physics.experiments.simulator.computer,
- ro.stefanprisca.physics.experiments.simulator.core
+ ro.stefanprisca.physics.experiments.simulator.core;uses:="org.eclipse.recommenders.utils"
 

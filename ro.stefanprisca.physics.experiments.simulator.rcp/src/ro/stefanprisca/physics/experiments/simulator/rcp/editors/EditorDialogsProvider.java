@@ -1,6 +1,5 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp.editors;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,15 +17,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
-import org.eclipse.ui.dialogs.SelectionDialog;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+
 
 
 
@@ -61,8 +59,9 @@ public class EditorDialogsProvider {
 					formulaSel.setElements(DelegatingMathComputer
 							.getPrettyMathMethodsArray());
 					formulaSel.open();
+					formulaSel.setHelpAvailable(true);
 					String formula = parseFormula(formulaSel.getFirstResult());
-					getText().append(formula);
+					insertOnText(formula, getText());
 				
 				}
 
@@ -71,6 +70,16 @@ public class EditorDialogsProvider {
 
 			return contents;
 		}
+		private void insertOnText(String formula, Text text) {
+			int index = text.getCaretPosition();
+			String contents = text.getText();
+			String firstPart=contents.substring(0, index);
+			String secondPart = contents.substring(index);
+			text.setText(firstPart + " " + formula + " " + secondPart);
+			
+		}
+
+		
 	}
 
 	private IEditorPart editor;

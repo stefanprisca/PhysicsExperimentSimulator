@@ -1,8 +1,8 @@
 package ro.stefanprisca.physics.experiments.simulator.rcp;
 
-import org.eclipse.jdt.internal.ui.wizards.buildpaths.newsourcepage.HelpAction;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
@@ -25,9 +25,13 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	@Override
 	protected void makeActions(IWorkbenchWindow window) {
 		// TODO Auto-generated method stub
-		IAction help = new HelpAction();
+		IAction help = ActionFactory.HELP_CONTENTS.create(window);
 		help.setId("HELP");
 		register(help);
+		IAction introAction = ActionFactory.INTRO.create(window);
+		register(introAction);
+		
 		super.makeActions(window);
 	}
+	
 }
