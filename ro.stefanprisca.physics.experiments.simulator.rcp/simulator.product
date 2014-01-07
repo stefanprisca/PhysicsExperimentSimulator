@@ -17,8 +17,13 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/ro.stefanprisca.physics.experiments.simulator.rcp/icons/releng_gears.gif"/>
 
+   <splash
+      location="ro.stefanprisca.physics.experiments.simulator.rcp"
+      startupProgressRect="5,340,445,15"
+      startupMessageRect="7,320,445,20"
+      startupForegroundColor="FFFFFF" />
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -30,6 +35,13 @@
 
    <vm>
    </vm>
+
+   <license>
+        <text>
+   Copyright 2014 Stefan Prisca
+This product may be used in personal and educational purpoases only
+         </text>
+   </license>
 
    <plugins>
       <plugin id="ch.qos.logback.classic"/>

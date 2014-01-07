@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <introContent>
 	<extensionContent
-		id="rostefanpriscaphysicsexperimentssimulatorrcp-introExtension"
-		style="css/sample.css" name="Sample Extension" path="overview/@">
+		id="rspesoverviewIntro"
+		 class="font250"
+		style="css/sample.css" name="Overview Extension" path="overview/@">
 		<group style-id="content-group"
-			id="rostefanpriscaphysicsexperimentssimulatorrcp-introLink-group">
+			class="intro">
 
 			<text>
 				Welcome to the Physics Experiment Simulator!
@@ -18,33 +19,35 @@
 				clear decimal form.
 
 			</text>
-			<text>*Recommended: Read the Help section before starting.</text>
+			<text>
+			*Recommended: Read the Help section before starting.
+			</text>
+			<text>
+			** You can always come back here from Help -> Show Welcome
+			</text>
 		</group>
-		<text>
-			You can always come back here from Help -> Show Welcome
-		</text>
+		
 	</extensionContent>
 	<extensionContent
-		id="rostefanpriscaphysicsexperimentssimulatorrcp-introExtension"
-		style="css/sample.css" name="Sample Extension" path="firststeps/@">
-		<group style-id="content-group"
-			id="rostefanpriscaphysicsexperimentssimulatorrcp-introLink-group">
+		id="rspesfirstStepsIntro"
+		style="css/sample.css" name="First Steps" path="firststeps/@">
+		<group style-id="content-group">
 			<text>
 				In oder to get started with the simulator, first you need to download
 				the experiments from the repository.
 				(If you already downloaded them, or you don't want to, skip this step).
 				To do so, follow the next link:
 			</text>
-			<link label="GitHub Repository -> Experiments" style-id="content-link"
-				url="https://github.com/stefanprisca/PhysicsExperimentSimulator/tree/master/Experiments">
-				<text>Link to the Experiments folder in the project repository
-				</text>
+		
+			<link label="GitHub Repository -> Experiments" style-id="content-link" img="graphics/sample_hov.gif"
+				url="https://github.com/stefanprisca/PhysicsExperimentSimulator/tree/master/Experiments" >
+				<text>Link to the Experiments folder in the project repository	</text>
 			</link>
 			<text>
 				Next, you'll have to go to File -> Preferences -> Simulator Preferences
 				and set the experiment directory.
 				Here you can create a new directory in which to store experiments, or
-				select the dowloaded folder.
+				select the downloaded folder.
 				Note that you can only change the directory from here. All experiments
 				created will be saved in the selected dir.
 			</text>
@@ -53,42 +56,48 @@
 				from the view, this will make them
 				appear in the list.
 			</text>
-			<text style-id="content"> Now you are all done! Double click on them to
+			<text> Now you are all done! Double click on them to
 				edit and run.</text>
 		</group>
 
 	</extensionContent>
 	<extensionContent
-		id="rostefanpriscaphysicsexperimentssimulatorrcp-introExtension-samples"
-		style="css/sample.css" name="Sample Extension" path="samples/@">
-		<group style-id="content-group"
-			id="rostefanpriscaphysicsexperimentssimulatorrcp-introLink-group">
+		id="rspesSamplesIntro"
+		style="css/sample.css" name="Samples" path="samples/@">
+		<group style-id="content-group">
 			<text> You can find all code samples in the git repository of the
-				project, following the link</text>
+				project, following the next link. Please note that all experiments are in json
+				file format, so you will need to open them as described in the first steps section or the help.
+				</text>
 			<link label="GitHub Repository -> Experiments" style-id="content-link"
 				url="https://github.com/stefanprisca/PhysicsExperimentSimulator/tree/master/Experiments">
 				<text>Link to the Experiments folder in the project repository
 				</text>
 			</link>
 		</group>
-		<group style-id="content-group"
-			id="rostefanpriscaphysicsexperimentssimulatorrcp-introLink-group">
+		<group style-id="content-group">
 			<text>
 				In the following lines, there are some samples to help you start
 				along:
 			</text>
-			<text>******The second order equation*******</text>
-			<text> "{delta} = pow({b},2.0) - 4.0*{a}*{c}"</text>
-			<text> "{x} = ({b} - sqrt({delta}) ) / 2.0*{a}"</text>
-			<text> "{x} = ({b} + sqrt({delta}) ) / 2.0*{a}"</text>
-			<text>******Velocity Measurement*******</text>
-			<text>"{v} = {d} / {t}"</text>
-			<text> "{t} = {t} + 1.0"</text>
+		</group>
+		<text style-id="content-group">(1) The second order equation</text>
+		<group style-id="sample-code">
+			
+			<text> {delta} = pow({b},2.0) - 4.0*{a}*{c}</text>
+			<text> {x} = ({b} - sqrt({delta}) ) / 2.0*{a}</text>
+			<text> {x} = ({b} + sqrt({delta}) ) / 2.0*{a}</text>
+		</group>
+		<text style-id="content-group">(2) Velocity Measurement</text>
+		<group style-id="sample-code">
+			
+			<text>{v} = {d} / {t}</text>
+			<text>{t} = {t} + 1.0</text>
 		</group>
 	</extensionContent>
 	<extensionContent
-		id="rostefanpriscaphysicsexperimentssimulatorrcp-introExtension-Web"
-		style="css/sample.css" name="Sample Extension" path="webresources/@">
+		id="rspesWeb"
+		style="css/sample.css" name="Web Resource" path="webresources/@">
 		<group style-id="content-group"
 			id="rostefanpriscaphysicsexperimentssimulatorrcp-introLink-group">
 			<link label="GitHub Repository" style-id="content-link"
