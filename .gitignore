@@ -3,7 +3,7 @@
 *.zip
 *.gz
 ## no deploy folder
-./Deploy
+Deploy/
 ## no derived resources
 *.class
 bin/

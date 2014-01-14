@@ -1,6 +1,5 @@
 package ro.stefanprisca.physics.experiments.simulator.computer
 
-import com.google.inject.Inject
 import java.lang.reflect.Method
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer
 
@@ -40,12 +39,6 @@ class DelegatingMathComputer implements IComputer {
 			s.add(name)
 		}
 		return s.toArray
-	}
-	
-	
-	@Inject
-	new(){
-		
 	}
 	
 	/**

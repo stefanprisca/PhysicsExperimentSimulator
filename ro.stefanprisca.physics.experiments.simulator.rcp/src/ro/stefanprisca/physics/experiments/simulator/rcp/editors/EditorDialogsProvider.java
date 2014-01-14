@@ -37,6 +37,8 @@ public class EditorDialogsProvider {
 
 		private ElementListSelectionDialog formulaSel;
 
+		private Shell contentAssist;
+
 		public ExperimentInputDialogEditor(Shell parentShell,
 				String dialogTitle, String dialogMessage, String initialValue,
 				IInputValidator validator) {
@@ -46,7 +48,7 @@ public class EditorDialogsProvider {
 		}
 
 		@Override
-		protected Control createDialogArea(Composite parent) {
+		protected Control createDialogArea(final Composite parent) {
 			// TODO Auto-generated method stub
 			Composite contents = (Composite) super.createDialogArea(parent);
 			Button insertFormula = new Button(contents, SWT.PUSH);
@@ -228,6 +230,7 @@ public class EditorDialogsProvider {
 	}
 
 	private String parseFormula(Object firstResult) {
+		if(firstResult == null) return "";
 		String result = (String) firstResult;
 		String parameters = result.substring(result.indexOf('(') + 1,
 				result.indexOf(')'));

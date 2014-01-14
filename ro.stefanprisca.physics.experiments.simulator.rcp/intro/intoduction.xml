@@ -111,4 +111,14 @@
 			<text>Thank you for using this software!</text>
 		</group>
 	</extensionContent>
+	<extensionContent id ="rspesTutorials"
+		style="css/sample.css" name="Web Resource" path="tutorials/@">
+		<group style-id="content-group" title="Accessing the help section">
+		<text>You can find tutorials by accessing the Getting Started section of the application Help</text>
+		<text>Help -> Help -> Table of Contents -> Getting Started</text>
+		</group>
+		<group style-id="content-group" title="Accessing the help section">
+		<text>Also, you can check out the First Steps and Samples sections of this welcome page.</text>
+		</group>
+	</extensionContent>
 </introContent>

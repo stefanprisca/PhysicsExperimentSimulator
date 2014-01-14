@@ -1,6 +1,5 @@
 package ro.stefanprisca.physics.experiments.simulator.computer;
 
-import com.google.inject.Inject;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,10 +63,6 @@ public class DelegatingMathComputer implements IComputer {
       }
     }
     return s.toArray();
-  }
-  
-  @Inject
-  public DelegatingMathComputer() {
   }
   
   /**

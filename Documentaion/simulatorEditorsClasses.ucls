@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.4" icons="true" automaticImage="JPEG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentEditor" 
+    project="ro.stefanprisca.physics.experiments.simulator.rcp" 
+    file="/ro.stefanprisca.physics.experiments.simulator.rcp/src/ro/stefanprisca/physics/experiments/simulator/rcp/editors/ExperimentEditor.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="286" width="323" x="549" y="617"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" 
+    name="ro.stefanprisca.physics.experiments.simulator.rcp.editors.EditorDialogsProvider.ExperimentInputDialogEditor" 
+    project="ro.stefanprisca.physics.experiments.simulator.rcp" 
+    file="/ro.stefanprisca.physics.experiments.simulator.rcp/src/ro/stefanprisca/physics/experiments/simulator/rcp/editors/EditorDialogsProvider.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="160" width="426" x="41" y="617"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" 
+    name="ro.stefanprisca.physics.experiments.simulator.rcp.editors.ExperimentFileEditorInput" 
+    project="ro.stefanprisca.physics.experiments.simulator.rcp" 
+    file="/ro.stefanprisca.physics.experiments.simulator.rcp/src/ro/stefanprisca/physics/experiments/simulator/rcp/editors/ExperimentFileEditorInput.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="528" y="1187"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="ro.stefanprisca.physics.experiments.simulator.rcp.editors.EditorDialogsProvider" 
+    project="ro.stefanprisca.physics.experiments.simulator.rcp" 
+    file="/ro.stefanprisca.physics.experiments.simulator.rcp/src/ro/stefanprisca/physics/experiments/simulator/rcp/editors/EditorDialogsProvider.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="232" width="407" x="81" y="345"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="ro.stefanprisca.physics.experiments.simulator.rcp.editors.FieldEditorsPage" 
+    project="ro.stefanprisca.physics.experiments.simulator.rcp" 
+    file="/ro.stefanprisca.physics.experiments.simulator.rcp/src/ro/stefanprisca/physics/experiments/simulator/rcp/editors/FieldEditorsPage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="268" width="370" x="530" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="ro.stefanprisca.physics.experiments.simulator.core.ExperimentStorage" 
+    project="ro.stefanprisca.physics.experiments.simulator.rcp" 
+    file="/ro.stefanprisca.physics.experiments.simulator.rcp/src/ro/stefanprisca/physics/experiments/simulator/core/ExperimentStorage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="178" width="289" x="851" y="943"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="7">    
+    <bendpoint x="518" y="345"/>    
+    <bendpoint x="518" y="617"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="8" name="input"/>      
+      <multiplicity id="9" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="10">    
+    <bendpoint x="539" y="345"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="11">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <association id="12">    
+    <bendpoint x="497" y="617"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="13" name="input"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="15">    
+    <bendpoint x="560" y="345"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="16">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <association id="17">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="18" name="edp"/>      
+      <multiplicity id="19" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="20">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="21" name="storage"/>      
+      <multiplicity id="22" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="23">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </nesting>  
+  <dependency id="24">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
