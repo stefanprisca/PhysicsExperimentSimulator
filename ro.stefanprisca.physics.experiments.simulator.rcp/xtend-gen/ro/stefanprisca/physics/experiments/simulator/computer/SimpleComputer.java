@@ -7,15 +7,24 @@ import java.util.regex.Pattern;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer;
 
+/**
+ * Class used for simple computations like additions, etc
+ */
 @SuppressWarnings("all")
 public class SimpleComputer implements IComputer {
+  private static int scale = 12;
+  
+  public static void setScale(final int sc) {
+    SimpleComputer.scale = sc;
+  }
+  
   public double compute(final String equation, final Object... arguments) throws IllegalArgumentException {
     Object _get = arguments[0];
     BigDecimal _bigDecimal = new BigDecimal((((Double) _get)).doubleValue());
-    BigDecimal result = _bigDecimal.setScale(12, BigDecimal.ROUND_HALF_UP);
+    BigDecimal result = _bigDecimal.setScale(SimpleComputer.scale, BigDecimal.ROUND_HALF_UP);
     Object _get_1 = arguments[1];
     BigDecimal _bigDecimal_1 = new BigDecimal((((Double) _get_1)).doubleValue());
-    BigDecimal arg2 = _bigDecimal_1.setScale(12, BigDecimal.ROUND_HALF_UP);
+    BigDecimal arg2 = _bigDecimal_1.setScale(SimpleComputer.scale, BigDecimal.ROUND_HALF_UP);
     final Function1<String,String> _function = new Function1<String,String>() {
       public String apply(final String eq) {
         Pattern _compile = Pattern.compile(IComputer.MATHOPERATOR_PATTERN);

@@ -9,6 +9,11 @@ import org.eclipse.recommenders.utils.Uuidable;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Model representation of an variable
+ * @author Stefan
+ *
+ */
 public class Variable implements Comparable<Variable>, Uuidable {
 
 	@SerializedName("id")

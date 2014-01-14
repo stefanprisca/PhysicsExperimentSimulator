@@ -6,9 +6,16 @@ import ro.stefanprisca.physics.experiments.simulator.core.IComputer
 
 import static org.eclipse.recommenders.utils.Checks.*
 
+/**
+ * Class delegating methods to the java.lang.Math class to compute all sorts of operations
+ */
 class DelegatingMathComputer implements IComputer {
 	
 	private Math delegate;
+	/**
+	 * Returns a String containing the names of all Math methods.
+	 * Use this when checking for methods inside the java.lang.Math class
+	 */
 	def static getMathMethods(){
 		var s = new String("")
 		for(m:Math.methods){
@@ -16,7 +23,9 @@ class DelegatingMathComputer implements IComputer {
 		}
 		return s
 	}	
-	
+	/**
+	 * Returns a list of Strings containing all the java.lang.Math methods
+	 */
 	def  static getPrettyMathMethodsArray(){
 		var s = newArrayList()
 		for(m : Math.methods){
@@ -39,11 +48,10 @@ class DelegatingMathComputer implements IComputer {
 		
 	}
 	
+	/**
+	 * Computes the equation by delegating to the proper Math method
+	 */
 	override compute(String equation, Object... args) {
-		delegateEquation(equation, args)
-	}
-	
-	def double delegateEquation(String equation, Object... args){
 		ensureIsNotNull(args)
 		val method=if(args.length==1) Math.getMethod(equation, double) 
 					else if(args.length==2) Math.getMethod(equation, double, double) 
@@ -51,7 +59,9 @@ class DelegatingMathComputer implements IComputer {
 		var result = method.invoke(delegate, (method.getParameters(args) as double[]).toArray)
 		return result as Double
 	}
-	
+	/**
+	 * Obtain the parameters for the method
+	 */
 	def getParameters(Method m, Object... args){
 		ensureIsNotNull(args)
 		ensureIsTrue(m.parameterTypes.length.equals(args.length))

@@ -3,11 +3,13 @@
  ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.core;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-
+/**
+ * Interface that defines an experiment Computer.
+ * It contains all patterns and special variables required
+ */
 public interface IComputer {
 
 	public static final String VARIABLE_PATTERN = "(\\{[a-zA-Z]+[0-9]*\\})";
@@ -39,6 +41,15 @@ public interface IComputer {
 	public static final double G = 9.18;
 	
 	public static final List<String> SPECIAL_VARS = Lists.newArrayList("PI","G", "E");
+	
+	/**
+	 * Method used to compute experiments.
+	 * Implementation depends on what you need to compute.
+	 * @param equation A string describing the operation to be computed
+	 * @param arguments An array containing parameters for the operation
+	 * @return
+	 * @throws Exception
+	 */
 	public double compute(String equation, Object... arguments)
 			throws Exception;
 

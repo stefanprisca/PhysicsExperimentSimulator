@@ -16,7 +16,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
-import ro.stefanprisca.physics.experiments.simulator.core.Function;
 import ro.stefanprisca.physics.experiments.simulator.core.Variable;
 
 public class GsonSerializationTests {

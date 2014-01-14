@@ -3,16 +3,13 @@
  ******************************************************************************/
 package ro.stefanprisca.physics.experiments.simulator.rcp.editors;
 
-import java.io.File;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.recommenders.utils.gson.GsonUtil;
 import org.eclipse.ui.*;
 import org.eclipse.ui.forms.editor.FormEditor;
-import com.google.common.io.Files;
-import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
-import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger;
+
+import ro.stefanprisca.physics.experiments.simulator.core.ExperimentStorage;
 
 /**
  * An example showing how to create a multi-page editor. This example has 3
@@ -59,17 +56,7 @@ public class ExperimentEditor extends FormEditor implements
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		ExperimentFileEditorInput input = (ExperimentFileEditorInput) getEditorInput();
-		Experiment newExpr = input.getExperiment();
-
-		String contents = GsonUtil.serialize(newExpr);
-
-		File json = input.getExperiment().getLocation();
-		try {
-			Files.write(contents.getBytes(), json);
-		} catch (Exception e) {
-			ExperimentLogger.getInstance().severe(
-					"Failed to save file! \n" + e.getMessage());
-		}
+		ExperimentStorage.getInstance().saveExperiment(input.getExperiment());
 		this.setDirty(false);
 	}
 

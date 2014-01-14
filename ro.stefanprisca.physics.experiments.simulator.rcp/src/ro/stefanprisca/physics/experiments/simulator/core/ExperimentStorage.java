@@ -9,8 +9,18 @@ import java.util.TreeSet;
 
 import org.eclipse.recommenders.utils.gson.GsonUtil;
 
+import com.google.common.io.Files;
+
 import ro.stefanprisca.physics.experiments.simulator.rcp.Activator;
+import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger;
 import ro.stefanprisca.physics.experiments.simulator.rcp.preferences.PreferenceConstants;
+
+/**
+ * Storage class. It provides methods to fetch experiments from the file system and to save experiments.
+ * This class is a singleton, use the getInstance() method to access it.
+ * @author Stefan
+ *
+ */
 
 public class ExperimentStorage {
 
@@ -31,17 +41,10 @@ public class ExperimentStorage {
 		this.location = new File(Activator.getDefault().getPreferenceStore()
 				.getString(PreferenceConstants.P_PATH));
 	}
-
-	private ExperimentStorage(String location) {
-		this.location = new File(location);
-		// findOrCreateProject(this.location);
-	}
-
-	/*
-	 * private void findOrCreateProject(File location) { // TODO Auto-generated
-	 * method stub location.g }
+	/**
+	 * Returns the experiments from the file system
+	 * @return a list containing the experiments
 	 */
-
 	public Set<Experiment> getExperiments() {
 		TreeSet<Experiment> result = new TreeSet<Experiment>();
 
@@ -64,6 +67,11 @@ public class ExperimentStorage {
 		return result;
 	}
 
+	/**
+	 * Returns only those experiments that match a given pattern
+	 * @param filter the pattern experiments need to match
+	 * @return a list of experiments that match the given pattern
+	 */
 	public Set<Experiment> getExperiments(String filter) {
 		TreeSet<Experiment> result = new TreeSet<Experiment>();
 		Experiment exp;
@@ -80,6 +88,22 @@ public class ExperimentStorage {
 
 		}
 		return result;
+	}
+	
+	/**
+	 * Saves an experiment in it location
+	 * @param newExpr the experiment to save
+	 */
+	public void saveExperiment(Experiment newExpr){
+		String contents = GsonUtil.serialize(newExpr);
+
+		File json = newExpr.getLocation();
+		try {
+			Files.write(contents.getBytes(), json);
+		} catch (Exception e) {
+			ExperimentLogger.getInstance().severe(
+					"Failed to save file! \n" + e.getMessage());
+		}
 	}
 
 }

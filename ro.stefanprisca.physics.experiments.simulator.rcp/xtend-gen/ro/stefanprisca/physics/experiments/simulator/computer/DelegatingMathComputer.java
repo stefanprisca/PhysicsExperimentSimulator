@@ -11,10 +11,17 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import ro.stefanprisca.physics.experiments.simulator.core.IComputer;
 
+/**
+ * Class delegating methods to the java.lang.Math class to compute all sorts of operations
+ */
 @SuppressWarnings("all")
 public class DelegatingMathComputer implements IComputer {
   private Math delegate;
   
+  /**
+   * Returns a String containing the names of all Math methods.
+   * Use this when checking for methods inside the java.lang.Math class
+   */
   public static String getMathMethods() {
     String _string = new String("");
     String s = _string;
@@ -28,6 +35,9 @@ public class DelegatingMathComputer implements IComputer {
     return s;
   }
   
+  /**
+   * Returns a list of Strings containing all the java.lang.Math methods
+   */
   public static Object[] getPrettyMathMethodsArray() {
     ArrayList<String> s = CollectionLiterals.<String>newArrayList();
     Method[] _methods = Math.class.getMethods();
@@ -60,12 +70,10 @@ public class DelegatingMathComputer implements IComputer {
   public DelegatingMathComputer() {
   }
   
+  /**
+   * Computes the equation by delegating to the proper Math method
+   */
   public double compute(final String equation, final Object... args) {
-    double _delegateEquation = this.delegateEquation(equation, args);
-    return _delegateEquation;
-  }
-  
-  public double delegateEquation(final String equation, final Object... args) {
     try {
       Checks.<Object[]>ensureIsNotNull(args);
       Method _xifexpression = null;
@@ -97,6 +105,9 @@ public class DelegatingMathComputer implements IComputer {
     }
   }
   
+  /**
+   * Obtain the parameters for the method
+   */
   public double[] getParameters(final Method m, final Object... args) {
     Checks.<Object[]>ensureIsNotNull(args);
     Class<? extends Object>[] _parameterTypes = m.getParameterTypes();

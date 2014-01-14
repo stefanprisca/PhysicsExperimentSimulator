@@ -14,6 +14,11 @@ import org.eclipse.recommenders.utils.Uuidable;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("rawtypes")
+/**
+ * Core class of the project. It is the model representation of an experiment
+ * @author Stefan
+ *
+ */
 public class Experiment implements Uuidable, Comparable {
 
 	@SerializedName("uuid")

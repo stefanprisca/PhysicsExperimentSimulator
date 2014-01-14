@@ -14,8 +14,13 @@ import ro.stefanprisca.physics.experiments.simulator.core.IComputer;
 import ro.stefanprisca.physics.experiments.simulator.core.Variable;
 import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger;
 
+/**
+ * Class that computes a single equation from the experiment.<br>
+ * Searches the eq for specific patterns and delegates the simple computations to either the
+ * math computer or the simple computer delegates.
+ */
 @SuppressWarnings("all")
-public class FunctionComputer implements IComputer {
+public class EquationComputer implements IComputer {
   private DelegatingMathComputer mathComputer = new Function0<DelegatingMathComputer>() {
     public DelegatingMathComputer apply() {
       DelegatingMathComputer _delegatingMathComputer = new DelegatingMathComputer();
@@ -32,7 +37,11 @@ public class FunctionComputer implements IComputer {
   
   private static Logger LOGGER = ExperimentLogger.getInstance();
   
-  public double computeFunction(final String f, final List<Variable> variables) throws Exception {
+  /**
+   * Starts the computation for an equation, given the experiment variables.
+   * Also eliminates all the ws from the equation
+   */
+  public double computeEquation(final String f, final List<Variable> variables) throws Exception {
     double _xblockexpression = (double) 0;
     {
       String equation = f.replaceAll("\\s+", "");
@@ -43,6 +52,10 @@ public class FunctionComputer implements IComputer {
     return _xblockexpression;
   }
   
+  /**
+   * Checks for assignments in equations and if there is the case, it will keep the
+   * result of the equation in the right-hand variable
+   */
   public double computeEquationWithAssignment(final String equationFinal, final Object... arguments) throws Exception {
     Pattern _compile = Pattern.compile(IComputer.ASSIGNMENT_PATTERN);
     Matcher matcher = _compile.matcher(equationFinal);
@@ -77,6 +90,11 @@ public class FunctionComputer implements IComputer {
     }
   }
   
+  /**
+   * The actual computation of an equation.
+   * Taking terms 2 by 2 and replacing them in the equation with the computation result until
+   * there are no more 2 terms free for taking, and then it evaluates the final result.
+   */
   public double compute(final String equationFinal, final Object... arguments) throws Exception {
     String equation = equationFinal;
     double result = 0;
@@ -94,7 +112,7 @@ public class FunctionComputer implements IComputer {
           {
             stillFinds = true;
             String operation = matcher.group();
-            FunctionComputer.LOGGER.info(("The operation is: " + operation));
+            EquationComputer.LOGGER.info(("The operation is: " + operation));
             final Function1<String,String> _function = new Function1<String,String>() {
               public String apply(final String eq) {
                 Pattern _compile = Pattern.compile(IComputer.NOPARANTH_OPERATION_PATTERN);
@@ -111,7 +129,7 @@ public class FunctionComputer implements IComputer {
             boolean _matches = operation.matches(IComputer.UNARY_OPERATION);
             if (_matches) {
               String operand = operation.replaceAll("[()-]", "");
-              FunctionComputer.LOGGER.info(("Operand to be negated is: " + operand));
+              EquationComputer.LOGGER.info(("Operand to be negated is: " + operand));
               double _computeOperand = this.computeOperand(operand, arguments);
               double _minus = (-_computeOperand);
               intermediateResult = _minus;
@@ -122,29 +140,29 @@ public class FunctionComputer implements IComputer {
               String[] _split = compOperation.split(IComputer.MATHOPERATOR_PATTERN);
               for (final String operand_1 : _split) {
                 {
-                  FunctionComputer.LOGGER.info(("Operand is: " + operand_1));
+                  EquationComputer.LOGGER.info(("Operand is: " + operand_1));
                   double _computeOperand_1 = this.computeOperand(operand_1, arguments);
                   intermediates[nextInter] = _computeOperand_1;
                   double _get = intermediates[nextInter];
                   String _plus = ((("The result of the intermediate operation " + operand_1) + " is: ") + Double.valueOf(_get));
-                  FunctionComputer.LOGGER.info(_plus);
+                  EquationComputer.LOGGER.info(_plus);
                   nextInter = (nextInter + 1);
                 }
               }
               final double[] _converted_intermediates = (double[])intermediates;
               String _string = ((List<Double>)Conversions.doWrapArray(_converted_intermediates)).toString();
               String _plus = ("The intermediate results are " + _string);
-              FunctionComputer.LOGGER.info(_plus);
+              EquationComputer.LOGGER.info(_plus);
               double _get = intermediates[0];
               double _get_1 = intermediates[1];
               double _compute = this.simpleComputer.compute(compOperation, Double.valueOf(_get), Double.valueOf(_get_1));
               intermediateResult = _compute;
             }
-            FunctionComputer.LOGGER.info(
+            EquationComputer.LOGGER.info(
               ((("The result of operation " + compOperation) + " is: ") + Double.valueOf(intermediateResult)));
             String _replace = equation.replace(operation, ("" + Double.valueOf(intermediateResult)));
             equation = _replace;
-            FunctionComputer.LOGGER.info(("The equation now is: " + equation));
+            EquationComputer.LOGGER.info(("The equation now is: " + equation));
           }
           boolean _find_1 = matcher.find();
           _while_1 = _find_1;
@@ -156,11 +174,14 @@ public class FunctionComputer implements IComputer {
     result = _parseDouble;
     boolean _equals = Double.valueOf(result).equals(Double.valueOf(Double.NaN));
     if (_equals) {
-      FunctionComputer.LOGGER.severe("Something very wrong happened! Please check the numbers and the console log");
+      EquationComputer.LOGGER.severe("Something very wrong happened! Please check the numbers and the console log");
     }
     return result;
   }
   
+  /**
+   * computes the value of an operand from the equation
+   */
   private double computeOperand(final String operand, final Object... arguments) {
     boolean _matches = operand.matches(IComputer.MATHFUNCTION_PATTERN);
     if (_matches) {
@@ -173,7 +194,7 @@ public class FunctionComputer implements IComputer {
       final double[] _converted_arg = (double[])arg;
       String _string = ((List<Double>)Conversions.doWrapArray(_converted_arg)).toString();
       String _plus = ("Arguments for the math function are: " + _string);
-      FunctionComputer.LOGGER.info(_plus);
+      EquationComputer.LOGGER.info(_plus);
       boolean _find = m.find();
       if (_find) {
         final double[] _converted_arg_1 = (double[])arg;
@@ -201,6 +222,9 @@ public class FunctionComputer implements IComputer {
     return 0;
   }
   
+  /**
+   * gets the variable values for the math function
+   */
   private double[] getVariables(final String s, final Object... arguments) {
     int _indexOf = s.indexOf("(");
     int _plus = (_indexOf + 1);
@@ -244,6 +268,9 @@ public class FunctionComputer implements IComputer {
     return finalResult;
   }
   
+  /**
+   * returns the value of the variable with id
+   */
   private double getVariableValue(final String id, final Object... variables) {
     boolean _equals = id.equals("PI");
     if (_equals) {
@@ -269,6 +296,9 @@ public class FunctionComputer implements IComputer {
     throw _illegalArgumentException;
   }
   
+  /**
+   * Returns the Variable object corresponding to the variable with ID = id
+   */
   private Variable getVariable(final String id, final Object... variables) {
     for (final Object variable : variables) {
       String _id = ((Variable) variable).getId();
@@ -280,9 +310,12 @@ public class FunctionComputer implements IComputer {
     return null;
   }
   
+  /**
+   * Sets the logger to use for testing
+   */
   @VisibleForTesting
   public Logger setLogger(final Logger logger) {
-    Logger _LOGGER = FunctionComputer.LOGGER = logger;
+    Logger _LOGGER = EquationComputer.LOGGER = logger;
     return _LOGGER;
   }
 }

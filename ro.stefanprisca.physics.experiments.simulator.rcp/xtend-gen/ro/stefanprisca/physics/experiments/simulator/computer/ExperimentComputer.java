@@ -7,22 +7,28 @@ import java.util.List;
 import java.util.logging.Logger;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
-import ro.stefanprisca.physics.experiments.simulator.computer.FunctionComputer;
+import ro.stefanprisca.physics.experiments.simulator.computer.EquationComputer;
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
 import ro.stefanprisca.physics.experiments.simulator.core.Variable;
 import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger;
 
+/**
+ * Class used to compute an experiment
+ */
 @SuppressWarnings("all")
 public class ExperimentComputer {
   private static Logger LOGGER = ExperimentLogger.getInstance();
   
-  private static FunctionComputer fComp = new Function0<FunctionComputer>() {
-    public FunctionComputer apply() {
-      FunctionComputer _functionComputer = new FunctionComputer();
-      return _functionComputer;
+  private static EquationComputer fComp = new Function0<EquationComputer>() {
+    public EquationComputer apply() {
+      EquationComputer _equationComputer = new EquationComputer();
+      return _equationComputer;
     }
   }.apply();
   
+  /**
+   * Computes an experiment calling the equation computer for each of its equations
+   */
   public static void compute(final Experiment e) {
     double rez = 0;
     String _name = e.getName();
@@ -43,8 +49,8 @@ public class ExperimentComputer {
     List<String> _functions = e.getFunctions();
     for (final String f : _functions) {
       try {
-        double _computeFunction = ExperimentComputer.fComp.computeFunction(f, args);
-        rez = _computeFunction;
+        double _computeEquation = ExperimentComputer.fComp.computeEquation(f, args);
+        rez = _computeEquation;
         ExperimentComputer.LOGGER.info(((("The result of equation " + f) + " is:") + Double.valueOf(rez)));
       } catch (final Throwable _t) {
         if (_t instanceof IllegalArgumentException) {
@@ -88,6 +94,10 @@ public class ExperimentComputer {
     ExperimentComputer.LOGGER.fine(_plus_12);
   }
   
+  /**
+   * Computes an experiment for period times
+   *  calling the equation computer for each of its equations for period times
+   */
   public static void compute(final Experiment e, final String period) {
     double rez = 0;
     int t = Integer.parseInt(period);
@@ -113,8 +123,8 @@ public class ExperimentComputer {
         List<String> _functions = e.getFunctions();
         for (final String f : _functions) {
           try {
-            double _computeFunction = ExperimentComputer.fComp.computeFunction(f, args);
-            rez = _computeFunction;
+            double _computeEquation = ExperimentComputer.fComp.computeEquation(f, args);
+            rez = _computeEquation;
             ExperimentComputer.LOGGER.info(((("The result of equation " + f) + " is:") + Double.valueOf(rez)));
           } catch (final Throwable _t) {
             if (_t instanceof NumberFormatException) {
@@ -163,6 +173,9 @@ public class ExperimentComputer {
     }
   }
   
+  /**
+   * Sets the logger at testing
+   */
   @VisibleForTesting
   public Logger setLogger(final Logger logger) {
     Logger _LOGGER = ExperimentComputer.LOGGER = logger;

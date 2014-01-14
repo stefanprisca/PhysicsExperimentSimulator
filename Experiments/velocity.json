@@ -1,7 +1,7 @@
 {
   "uuid": "0f4905b2-de6c-4da9-9b0f-96287285b3ac",
   "name": "velocity",
-  "description": "",
+  "description": "This experiment computes the velocity",
   "functions": [
     "{v} \u003d {d} / {t}",
     "{t} \u003d {t} + 1.0"
@@ -20,5 +20,5 @@
       "val": 0.0
     }
   ],
-  "location": "C:\\Users\\Stefan\\SkyDrive\\Documents\\School\\SE\\Experiments\\velocity.json"
+  "location": "W:\\Workspace\\School\\SE_project\\Experiments\\velocity.json"
 }

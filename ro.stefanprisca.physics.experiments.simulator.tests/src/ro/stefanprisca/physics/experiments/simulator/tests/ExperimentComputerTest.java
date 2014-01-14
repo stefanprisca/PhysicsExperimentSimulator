@@ -1,6 +1,5 @@
 package ro.stefanprisca.physics.experiments.simulator.tests;
 
-import static org.junit.Assert.*;
 import static ro.stefanprisca.physics.experiments.simulator.computer.ExperimentComputer.compute;
 
 import java.util.ArrayList;
@@ -9,9 +8,7 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
-import ro.stefanprisca.physics.experiments.simulator.computer.FunctionComputer;
 import ro.stefanprisca.physics.experiments.simulator.core.Experiment;
-import ro.stefanprisca.physics.experiments.simulator.core.Function;
 import ro.stefanprisca.physics.experiments.simulator.core.Variable;
 
 public class ExperimentComputerTest {

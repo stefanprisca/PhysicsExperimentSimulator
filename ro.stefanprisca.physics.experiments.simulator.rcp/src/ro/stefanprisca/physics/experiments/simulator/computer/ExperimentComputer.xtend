@@ -7,14 +7,19 @@ import ro.stefanprisca.physics.experiments.simulator.core.Variable
 import ro.stefanprisca.physics.experiments.simulator.rcp.logging.ExperimentLogger
 import com.google.common.annotations.VisibleForTesting
 
+/**
+ * Class used to compute an experiment
+ */
 class ExperimentComputer {
 	private static Logger LOGGER = ExperimentLogger.instance;
 	
-	private static FunctionComputer fComp = new FunctionComputer();
+	private static EquationComputer fComp = new EquationComputer();
 	
 	
 	
-	
+	/**
+	 * Computes an experiment calling the equation computer for each of its equations
+	 */
 	def static compute(Experiment e){
 		
 		var double rez
@@ -29,7 +34,7 @@ class ExperimentComputer {
 		{
 				
 				try{
-				rez = fComp.computeFunction(f, args)
+				rez = fComp.computeEquation(f, args)
 				
 				LOGGER.info("The result of equation "+f+" is:"+ rez)
 				}catch(IllegalArgumentException ilae){
@@ -52,6 +57,11 @@ class ExperimentComputer {
 					"\n********************************************\n");		
 	}
 	
+	
+	/**
+	 * Computes an experiment for period times
+	 *  calling the equation computer for each of its equations for period times
+	 */
 	def static compute(Experiment e, String period){
 		var double rez
 		var t = Integer.parseInt(period)
@@ -66,7 +76,7 @@ class ExperimentComputer {
 		for(String f: e.functions)
 		{
 				try{
-				rez = fComp.computeFunction(f, args)
+				rez = fComp.computeEquation(f, args)
 				
 				LOGGER.info("The result of equation "+f+" is:"+ rez)
 				}catch (NumberFormatException nfe){
@@ -93,7 +103,9 @@ class ExperimentComputer {
 		
 	}
 	
-	
+	/**
+	 * Sets the logger at testing
+	 */
 	@VisibleForTesting
 	def public setLogger(Logger logger){
 		LOGGER = logger
